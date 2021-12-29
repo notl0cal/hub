@@ -55,13 +55,13 @@ def intro():
     c = 1
     while c > 0:
         print("""
-        Welcome to Quick Maths!\n
-        1.) Percent Change Calculator.\n
-        2.) Dollar Cost Averager.\n
-        3.) Entry Maths.\n
-        4.) Interest Calculator.\n
-        9.) Read Log.\n
-        0.) To Exit.\n
+Welcome to Quick Maths!\n
+    1.) Percent Change Calculator.\n
+    2.) Dollar Cost Averager.\n
+    3.) Entry Maths.\n
+    4.) Interest Calculator.\n
+    0.) To Exit.\n\n
+    X.) Read Log.
         """)
         a = input("Please select an option: ")
         if a == "1":
@@ -80,7 +80,7 @@ def intro():
             clear()
             iMath()
             continue
-        if a == "9":
+        if a.lower() == "x":
             clear()
             readLog()
             continue
