@@ -26,18 +26,12 @@ def resetting(times:int):
         sys.stdout.write("\r" + "Resetting... " + animation[i % len(animation)])
         sys.stdout.flush()
     clear()
-    print("Reset.")
-    time.sleep(1)
-    clear()
 def mathing(times:int):
     animation = "|/-\\"
     for i in range(times):
         time.sleep(0.1)
         sys.stdout.write("\r" + "Doing Maths... " + animation[i % len(animation)])
         sys.stdout.flush()
-    clear()
-    print("Finished.")
-    time.sleep(1)
     clear()
 def loading(times:int):
     animation = "|/-\\"
@@ -46,8 +40,15 @@ def loading(times:int):
         sys.stdout.write("\r" + "Loading Module... " + animation[i % len(animation)])
         sys.stdout.flush()
     clear()
-    print("Loaded.")
-    time.sleep(1)
+def saving(times:int):
+    animation = "|/-\\"
+    for i in range(times):
+        time.sleep(0.1)
+        sys.stdout.write("\r" + "Logging... " + animation[i % len(animation)])
+        sys.stdout.flush()
+    clear()
+    print("Logged.")
+    time.sleep(0.5)
     clear()
 #main function
 def intro():
@@ -112,6 +113,8 @@ def pChange():
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
         clear()
+        saving(12)
+        clear()
         resetting(15)
     else:
         clear()
@@ -133,6 +136,8 @@ def dca():
     if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
+        clear()
+        saving(12)
         clear()
         resetting(15)
     else:
@@ -181,6 +186,8 @@ def eMath():
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func  + result)
         clear()
+        saving(12)
+        clear()
         resetting(15)
     else:
         clear()
@@ -189,7 +196,7 @@ def eMath():
 def iMath():
     loading(10)
     func = "Interest Calculator"
-    im1 = float(input("Please enter the interest rate:\n%:"))
+    im1 = float(input("Please enter the interest rate:\n%: "))
     im2 = float(input("Please enter borrowed amount:\n$: "))
     clear()
     mathing(7)
@@ -202,6 +209,9 @@ def iMath():
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
         clear()
+        saving(12)
+        clear()
+        resetting(15)
     else:
         clear()
         resetting(15)
