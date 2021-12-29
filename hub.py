@@ -79,7 +79,6 @@ Welcome to Quick Maths!\n
         if a.lower() == "x":
             clear()
             logtools()
-            continue
         if a == "0":
             clear()
             exit()
