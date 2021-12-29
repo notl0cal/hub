@@ -7,8 +7,8 @@ import time
 from sys import platform
 from datetime import datetime
 #global variable declarations
-y = ["Y", "y", "YES", "yes"]
-n = ["N", "n", "NO", "no"]
+y = ["Y", "y", "YES", "yes", "Yes", "1"]
+n = ["N", "n", "NO", "no", "No", "0"]
 today = datetime.today()
 date = today.strftime("\n%d/%m/%Y @ %H:%M:%S")
 #global functions
@@ -80,7 +80,7 @@ def intro():
         else:
             clear()
             d = input("Not a valid option. Want to try again? (Y/N)")
-            if d in y:
+            if d.lower() in y:
                 continue
             else:
                 exit()
@@ -96,7 +96,7 @@ def pChange():
     clear()
     print(result)
     f = input("Do you want to save this file? (Y/N)")
-    if f in y:
+    if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result+ "\n")
     else:
@@ -116,9 +116,10 @@ def dca():
     print(values)
     print(result)
     f = input("Do you want to save this file? (Y/N)")
-    if f in y:
+    if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + result)
+        clear()
     else:
         clear()
         resetting(15)
@@ -160,9 +161,10 @@ How would you like to setup your trade?
     clear()
     print(result)
     f = input("Do you want to save this file? (Y/N)")
-    if f in y:
+    if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func  + result)
+        clear()
     else:
         clear()
         resetting(15)
@@ -178,9 +180,10 @@ def iMath():
     result = "Interest Expense: $" + str(im3) + "\n"
     print(result)
     f = input("Do you want to save this file? (Y/N)")        
-    if f in y:
+    if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
+        clear()
     else:
         clear()
         resetting(15)
