@@ -26,18 +26,28 @@ def resetting(times:int):
         sys.stdout.write("\r" + "Resetting... " + animation[i % len(animation)])
         sys.stdout.flush()
     clear()
-    print("Finished!")
-    time.sleep(2)
+    print("Reset.")
+    time.sleep(1)
     clear()
-def loading(times:int):
+def mathing(times:int):
     animation = "|/-\\"
     for i in range(times):
         time.sleep(0.1)
         sys.stdout.write("\r" + "Doing Maths... " + animation[i % len(animation)])
         sys.stdout.flush()
-        clear()
-    print("Finished!")
-    time.sleep(2)
+    clear()
+    print("Finished.")
+    time.sleep(1)
+    clear()
+def loading(times:int):
+    animation = "|/-\\"
+    for i in range(times):
+        time.sleep(0.1)
+        sys.stdout.write("\r" + "Loading Module... " + animation[i % len(animation)])
+        sys.stdout.flush()
+    clear()
+    print("Loaded.")
+    time.sleep(1)
     clear()
 #main function
 def intro():
@@ -86,54 +96,60 @@ def intro():
                 exit()
 #referenced functions
 def pChange():
+    loading(10)
     func = "Percent Change Calculator"
     pc1 = float(input("Enter the current price: "))
     pc2 = float(input("Enter the final price: "))
-    pc2 = (pc1 - pc2) / pc1
-    result = "%.0f%%" % (-100 * pc2)
+    pc3 = (pc1 - pc2) / pc1
+    final = "%.0f%%" % (-100 * pc3)
+    result = "Current Price: $" + str(pc1) + "\nFinal Price: $" + str(pc2) + "\nPercent Change: " + final + "\n"
     clear()
-    loading(20)
+    mathing(20)
     clear()
     print(result)
     f = input("Do you want to save this file? (Y/N)")
     if f.lower() in y:
         with open("trade.log", "a+") as file:
-            file.write(date + " | " + func + "\n" + result+ "\n")
+            file.write(date + " | " + func + "\n" + result)
+        clear()
+        resetting(15)
     else:
         clear()
         resetting(15)
         intro()
 def dca():
+    loading(10)
     func = "Dollar Cost Average"
     dca1 = [float(x) for x in input("Please enter dollar amounts with spaces inbetween.\n$: ").split()]
     dca2 = (sum(dca1) / len(dca1))
-    dca1.sort()
-    values = "\nValues: $" + str(dca1)
-    result = "\nAverage: $" + str(dca2) + "\n"
+    values = "Values: $" + str(dca1)
+    result = "Average: $" + str(dca2) + "\n"
     clear()
-    loading(20)
+    mathing(20)
     clear()
     print(values)
     print(result)
     f = input("Do you want to save this file? (Y/N)")
     if f.lower() in y:
         with open("trade.log", "a+") as file:
-            file.write(date + " | " + func + result)
+            file.write(date + " | " + func + "\n" + result)
         clear()
+        resetting(15)
     else:
         clear()
         resetting(15)
         intro()
 def eMath():
+    loading(10)
     func = "Entry Maths"
     ticker = str(input("Please enter the ticker:\n: "))
     em1 = float(input("Enter your entry point in dollars:\n$: "))
     eVol = float(input("Please enter number of " + ticker.upper() + " purchased:\n#: "))
-    print("""
-How would you like to setup your trade?
+    clear()
+    print("""How would you like to setup your trade?
 
-        1.) 3:6
-        2.) 6:12
+    1.) 3:6
+    2.) 6:12
 """)
     eRatio = int(input("Please select an option: "))
     if eRatio == 1:
@@ -155,9 +171,9 @@ How would you like to setup your trade?
         resetting(15)
         clear()
         eMath()
-    result = "\nTicker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nPosition: $" + str(ePos) + "\nFuture Position: $" + str(eFut) + "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
+    result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nPosition: $" + str(ePos) + "\nFuture Position: $" + str(eFut) + "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
     clear()
-    loading(25)
+    mathing(25)
     clear()
     print(result)
     f = input("Do you want to save this file? (Y/N)")
@@ -165,19 +181,21 @@ How would you like to setup your trade?
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func  + result)
         clear()
+        resetting(15)
     else:
         clear()
         resetting(15)
         intro()
 def iMath():
+    loading(10)
     func = "Interest Calculator"
     im1 = float(input("Please enter the interest rate:\n%:"))
     im2 = float(input("Please enter borrowed amount:\n$: "))
     clear()
-    loading(7)
+    mathing(7)
     clear()
     im3 = (im1 / 100) * im2
-    result = "Interest Expense: $" + str(im3) + "\n"
+    result = "Interest Rate: " + str(im1) + "%\n" + "Borrowed Amount: $" + str(im2) + "\n" +"Interest Expense: $" + str(im3) + "\n"
     print(result)
     f = input("Do you want to save this file? (Y/N)")        
     if f.lower() in y:
@@ -193,6 +211,7 @@ def readLog():
         p = file.read()
         print(p)
     input("Press enter to continue...")
+    clear()
     resetting(15)
 #main function call
 def main():
