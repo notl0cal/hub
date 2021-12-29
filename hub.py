@@ -19,36 +19,31 @@ def clear():
         os.system("cls")
 def exit():
     sys.exit("Exiting...")
-def resetting(times:int):
+def loady(msg:int, times:int):
     animation = "|/-\\"
-    for i in range(times):
-        time.sleep(0.1)
-        sys.stdout.write("\r" + "Resetting... " + animation[i % len(animation)])
-        sys.stdout.flush()
-    clear()
-def mathing(times:int):
-    animation = "|/-\\"
-    for i in range(times):
-        time.sleep(0.1)
-        sys.stdout.write("\r" + "Doing Maths... " + animation[i % len(animation)])
-        sys.stdout.flush()
-    clear()
-def loading(times:int):
-    animation = "|/-\\"
-    for i in range(times):
-        time.sleep(0.1)
-        sys.stdout.write("\r" + "Loading Module... " + animation[i % len(animation)])
-        sys.stdout.flush()
-    clear()
-def saving(times:int):
-    animation = "|/-\\"
-    for i in range(times):
-        time.sleep(0.1)
-        sys.stdout.write("\r" + "Logging... " + animation[i % len(animation)])
-        sys.stdout.flush()
-    clear()
-    print("Logged.")
-    time.sleep(0.5)
+    if str(msg) == "1":
+        for i in range(times):
+            time.sleep(0.1)
+            sys.stdout.write("\r" + "Resetting... " + animation[i % len(animation)])
+            sys.stdout.flush()
+    if str(msg) == "2":
+        for i in range(times):
+            time.sleep(0.1)
+            sys.stdout.write("\r" + "Doing Maths... " + animation[i % len(animation)])
+            sys.stdout.flush()
+    if str(msg) == "3":
+        for i in range(times):
+            time.sleep(0.1)
+            sys.stdout.write("\r" + "Loading Module... " + animation[i % len(animation)])
+            sys.stdout.flush()
+    if str(msg) == "4":
+        for i in range(times):
+            time.sleep(0.1)
+            sys.stdout.write("\r" + "Logging... " + animation[i % len(animation)])
+            sys.stdout.flush()
+        clear()
+        print("Logged.")
+        time.sleep(0.5)
     clear()
 #main function
 def intro():
@@ -97,7 +92,7 @@ Welcome to Quick Maths!\n
                 exit()
 #referenced functions
 def pChange():
-    loading(10)
+    loady(3, 10)
     func = "Percent Change Calculator"
     pc1 = float(input("Enter the current price: "))
     pc2 = float(input("Enter the final price: "))
@@ -105,7 +100,7 @@ def pChange():
     final = "%.0f%%" % (-100 * pc3)
     result = "Current Price: $" + str(pc1) + "\nFinal Price: $" + str(pc2) + "\nPercent Change: " + final + "\n"
     clear()
-    mathing(20)
+    loady(2, 20)
     clear()
     print(result)
     f = input("Do you want to save this file? (Y/N)")
@@ -113,22 +108,22 @@ def pChange():
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
         clear()
-        saving(12)
+        loady(4, 12)
         clear()
-        resetting(15)
+        loady(1, 15)
     else:
         clear()
-        resetting(15)
+        loady(1, 15)
         intro()
 def dca():
-    loading(10)
+    loady(3, 10)
     func = "Dollar Cost Average"
     dca1 = [float(x) for x in input("Please enter dollar amounts with spaces inbetween.\n$: ").split()]
     dca2 = (sum(dca1) / len(dca1))
     values = "Values: $" + str(dca1)
     result = "Average: $" + str(dca2) + "\n"
     clear()
-    mathing(20)
+    loady(2, 20)
     clear()
     print(values)
     print(result)
@@ -137,15 +132,15 @@ def dca():
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
         clear()
-        saving(12)
+        loady(4, 12)
         clear()
-        resetting(15)
+        loady(1, 15)
     else:
         clear()
-        resetting(15)
+        loady(1, 15)
         intro()
 def eMath():
-    loading(10)
+    loady(3, 10)
     func = "Entry Maths"
     ticker = str(input("Please enter the ticker:\n: "))
     em1 = float(input("Enter your entry point in dollars:\n$: "))
@@ -173,12 +168,12 @@ def eMath():
         eFut = emProfit + ePos
     else:
         print("Not a valid option...")
-        resetting(15)
+        loady(1, 15)
         clear()
         eMath()
     result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nPosition: $" + str(ePos) + "\nFuture Position: $" + str(eFut) + "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
     clear()
-    mathing(25)
+    loady(2, 20)
     clear()
     print(result)
     f = input("Do you want to save this file? (Y/N)")
@@ -186,20 +181,20 @@ def eMath():
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func  + result)
         clear()
-        saving(12)
+        loady(4, 12)
         clear()
-        resetting(15)
+        loady(1, 15)
     else:
         clear()
-        resetting(15)
+        loady(1, 15)
         intro()
 def iMath():
-    loading(10)
+    loady(3, 10)
     func = "Interest Calculator"
     im1 = float(input("Please enter the interest rate:\n%: "))
     im2 = float(input("Please enter borrowed amount:\n$: "))
     clear()
-    mathing(7)
+    loady(2, 7)
     clear()
     im3 = (im1 / 100) * im2
     result = "Interest Rate: " + str(im1) + "%\n" + "Borrowed Amount: $" + str(im2) + "\n" +"Interest Expense: $" + str(im3) + "\n"
@@ -209,12 +204,12 @@ def iMath():
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
         clear()
-        saving(12)
+        loady(4, 12)
         clear()
-        resetting(15)
+        loady(1, 15)
     else:
         clear()
-        resetting(15)
+        loady(1, 15)
         intro()
 def readLog():
     with open("trade.log", "r") as file:
@@ -222,7 +217,7 @@ def readLog():
         print(p)
     input("Press enter to continue...")
     clear()
-    resetting(15)
+    loady(1, 15)
 #main function call
 def main():
     intro()
