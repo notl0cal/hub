@@ -57,7 +57,7 @@ Welcome to Quick Maths!\n
     3.) Entry Maths.\n
     4.) Interest Calculator.\n
     0.) To Exit.\n\n
-    X.) Read Log.
+    X.) Log Tools.
         """)
         a = input("Please select an option: ")
         if a == "1":
@@ -78,7 +78,7 @@ Welcome to Quick Maths!\n
             continue
         if a.lower() == "x":
             clear()
-            readLog()
+            logtools()
             continue
         if a == "0":
             clear()
@@ -211,13 +211,48 @@ def iMath():
         clear()
         loady(1, 15)
         intro()
-def readLog():
-    with open("trade.log", "r") as file:
-        p = file.read()
-        print(p)
-    input("Press enter to continue...")
+def logtools():
     clear()
-    loady(1, 15)
+    while True:
+        print("""Log tools:
+
+        1.) Read Log.
+        2.) Reset Log.
+        0.) Back
+        """)
+        a = input("How would you like to proceed?: ")
+        if a == "1":
+            clear()
+            with open("trade.log", "r") as file:
+                p = file.read()
+                print(p)
+            input("Press enter to continue...")
+            clear()
+            continue
+        if a == "2":
+            clear()
+            d = input("Are you sure you want to proceed? (Y/N)")
+            if d.lower() in y:
+                loady(1, 10)
+                with open("trade.log", "w") as file:
+                    p = file.write("")
+                clear()
+                continue
+            else:
+                clear()
+                loady(1, 15)
+                clear()
+                continue
+        if a == "0":
+            intro()
+        else:
+            clear()
+            d = input("Not a valid option. Want to try again? (Y/N)")
+            if d.lower() in y:
+                clear()
+                continue
+            else:
+                intro()
 #main function call
 def main():
     intro()
