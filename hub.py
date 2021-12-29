@@ -100,7 +100,6 @@ def pChange():
     result = "Current Price: $" + str(pc1) + "\nFinal Price: $" + str(pc2) + "\nPercent Change: " + final + "\n"
     clear()
     loady(2, 20)
-    clear()
     print(result)
     f = input("Do you want to save this file? (Y/N)")
     if f.lower() in y:
@@ -108,7 +107,6 @@ def pChange():
             file.write(date + " | " + func + "\n" + result)
         clear()
         loady(4, 12)
-        clear()
         loady(1, 15)
     else:
         clear()
@@ -123,7 +121,6 @@ def dca():
     result = "Average: $" + str(dca2) + "\n"
     clear()
     loady(2, 20)
-    clear()
     print(values)
     print(result)
     f = input("Do you want to save this file? (Y/N)")
@@ -132,7 +129,6 @@ def dca():
             file.write(date + " | " + func + "\n" + result)
         clear()
         loady(4, 12)
-        clear()
         loady(1, 15)
     else:
         clear()
@@ -173,7 +169,6 @@ def eMath():
     result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nPosition: $" + str(ePos) + "\nFuture Position: $" + str(eFut) + "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
     clear()
     loady(2, 20)
-    clear()
     print(result)
     f = input("Do you want to save this file? (Y/N)")
     if f.lower() in y:
@@ -181,7 +176,6 @@ def eMath():
             file.write(date + " | " + func  + result)
         clear()
         loady(4, 12)
-        clear()
         loady(1, 15)
     else:
         clear()
@@ -194,7 +188,6 @@ def iMath():
     im2 = float(input("Please enter borrowed amount:\n$: "))
     clear()
     loady(2, 7)
-    clear()
     im3 = (im1 / 100) * im2
     result = "Interest Rate: " + str(im1) + "%\n" + "Borrowed Amount: $" + str(im2) + "\n" +"Interest Expense: $" + str(im3) + "\n"
     print(result)
@@ -204,7 +197,6 @@ def iMath():
             file.write(date + " | " + func + "\n" + result)
         clear()
         loady(4, 12)
-        clear()
         loady(1, 15)
     else:
         clear()
@@ -235,12 +227,10 @@ def logtools():
                 loady(1, 10)
                 with open("trade.log", "w") as file:
                     p = file.write("")
-                clear()
                 continue
             else:
                 clear()
                 loady(1, 15)
-                clear()
                 continue
         if a == "0":
             intro()
