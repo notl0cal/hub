@@ -20,6 +20,7 @@ def clear():
 def exit():
     sys.exit("Exiting...")
 def loady(msg:int, times:int):
+    clear()
     animation = "|/-\\"
     if str(msg) == "1":
         for i in range(times):
@@ -41,13 +42,15 @@ def loady(msg:int, times:int):
             time.sleep(0.1)
             sys.stdout.write("\r" + "Logging... " + animation[i % len(animation)])
             sys.stdout.flush()
-        clear()
-        print("Logged.")
-        time.sleep(0.5)
+    if str(msg) == "5":
+        for i in range(times):
+            time.sleep(0.1)
+            sys.stdout.write("\r" + "Loading...  " + animation[i % len(animation)])
+            sys.stdout.flush()
     clear()
 #main function
 def intro():
-    clear()
+    loady(5, 15)
     c = 1
     while c > 0:
         print("""
@@ -86,7 +89,7 @@ Welcome to Quick Maths!\n
             clear()
             d = input("Not a valid option. Want to try again? (Y/N)")
             if d.lower() in y:
-                continue
+                intro()
             else:
                 exit()
 #referenced functions
@@ -101,15 +104,13 @@ def pChange():
     clear()
     loady(2, 20)
     print(result)
-    f = input("Do you want to save this file? (Y/N)")
+    f = input("Do you want to log this output? (Y/N) ")
     if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
-        clear()
         loady(4, 12)
         loady(1, 15)
     else:
-        clear()
         loady(1, 15)
         intro()
 def dca():
@@ -119,19 +120,16 @@ def dca():
     dca2 = (sum(dca1) / len(dca1))
     values = "Values: $" + str(dca1)
     result = "Average: $" + str(dca2) + "\n"
-    clear()
     loady(2, 20)
     print(values)
     print(result)
-    f = input("Do you want to save this file? (Y/N)")
+    f = input("Do you want to log this output? (Y/N) ")
     if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
-        clear()
         loady(4, 12)
         loady(1, 15)
     else:
-        clear()
         loady(1, 15)
         intro()
 def eMath():
@@ -164,21 +162,17 @@ def eMath():
     else:
         print("Not a valid option...")
         loady(1, 15)
-        clear()
         eMath()
     result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nPosition: $" + str(ePos) + "\nFuture Position: $" + str(eFut) + "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
-    clear()
     loady(2, 20)
     print(result)
-    f = input("Do you want to save this file? (Y/N)")
+    f = input("Do you want to log this output? (Y/N) ")
     if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func  + result)
-        clear()
         loady(4, 12)
         loady(1, 15)
     else:
-        clear()
         loady(1, 15)
         intro()
 def iMath():
@@ -186,20 +180,17 @@ def iMath():
     func = "Interest Calculator"
     im1 = float(input("Please enter the interest rate:\n%: "))
     im2 = float(input("Please enter borrowed amount:\n$: "))
-    clear()
     loady(2, 7)
     im3 = (im1 / 100) * im2
     result = "Interest Rate: " + str(im1) + "%\n" + "Borrowed Amount: $" + str(im2) + "\n" +"Interest Expense: $" + str(im3) + "\n"
     print(result)
-    f = input("Do you want to save this file? (Y/N)")        
+    f = input("Do you want to log this output? (Y/N) ")        
     if f.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
-        clear()
         loady(4, 12)
         loady(1, 15)
     else:
-        clear()
         loady(1, 15)
         intro()
 def logtools():
@@ -218,28 +209,25 @@ def logtools():
                 p = file.read()
                 print(p)
             input("Press enter to continue...")
-            clear()
-            continue
+            logtools()
         if a == "2":
             clear()
-            d = input("Are you sure you want to proceed? (Y/N)")
+            d = input("Are you sure you want to continue? This will reset the log file. (Y/N) ")
             if d.lower() in y:
                 loady(1, 10)
                 with open("trade.log", "w") as file:
                     p = file.write("")
-                continue
+                logtools()
             else:
-                clear()
                 loady(1, 15)
-                continue
+                logtools()
         if a == "0":
             intro()
         else:
             clear()
             d = input("Not a valid option. Want to try again? (Y/N)")
             if d.lower() in y:
-                clear()
-                continue
+                logtools()
             else:
                 intro()
 #main function call
