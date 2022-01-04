@@ -18,6 +18,7 @@ def clear():
     if "win32" in sys.platform:
         os.system("cls")
 def exit():
+    clear()
     sys.exit("Exiting...")
 def loady(msg:int, times:int):
     clear()
@@ -64,26 +65,20 @@ Welcome to Quick Maths!\n
         """)
         a = input("Please select an option: ")
         if a == "1":
-            clear()
             pChange()
             continue
         if a == "2":
-            clear()
             dca()
             continue
         if a == "3":
-            clear()
             eMath()
             continue
         if a == "4":
-            clear()
             iMath()
             continue
         if a.lower() == "x":
-            clear()
             logtools()
         if a == "0":
-            clear()
             exit()
         else:
             clear()
@@ -139,11 +134,10 @@ def eMath():
     em1 = float(input("Enter your entry point in dollars:\n$: "))
     eVol = float(input("Please enter number of " + ticker.upper() + " purchased:\n#: "))
     clear()
-    print("""How would you like to setup your trade?
-
+    print("""How would you like to setup your trade?\n
     1.) 3:6
     2.) 6:12
-""")
+    """)
     eRatio = int(input("Please select an option: "))
     if eRatio == 1:
         emTake = (em1 * 0.06) + em1
@@ -196,8 +190,7 @@ def iMath():
 def logtools():
     clear()
     while True:
-        print("""Log tools:
-
+        print("""Log tools:\n
         1.) Read Log.
         2.) Reset Log.
         0.) Back
