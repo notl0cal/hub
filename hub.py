@@ -163,7 +163,7 @@ def eMath():
     f = input("Do you want to log this output? (Y/N) ")
     if f.lower() in y:
         with open("trade.log", "a+") as file:
-            file.write(date + " | " + func  + result)
+            file.write(date + " | " + func  + "\n" + result)
         loady(4, 12)
         loady(1, 15)
     else:
