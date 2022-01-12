@@ -157,7 +157,7 @@ def eMath():
         print("Not a valid option...")
         loady(1, 15)
         eMath()
-    result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nPosition: $" + str(ePos) + "\nFuture Position: $" + str(eFut) + "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
+    result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nVolume: x" + str(eVol) + "\nPosition: $" + str(ePos) + "\nFuture Position: $" + str(eFut) + "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
     loady(2, 20)
     print(result)
     f = input("Do you want to log this output? (Y/N) ")
@@ -188,7 +188,7 @@ def iMath():
         loady(1, 15)
         intro()
 def logtools():
-    clear()
+    loady(3,10)
     while True:
         print("""Log tools:\n
         1.) Read Log.
