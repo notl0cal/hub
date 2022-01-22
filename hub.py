@@ -9,6 +9,7 @@ from datetime import datetime
 #global variable declarations
 y = ["Y", "y", "YES", "yes", "Yes", "1"]
 n = ["N", "n", "NO", "no", "No", "0"]
+percent = "%"
 today = datetime.today()
 date = today.strftime("\n%d/%m/%Y @ %H:%M:%S")
 #global functions
@@ -131,33 +132,45 @@ def eMath():
     loady(3, 10)
     func = "Entry Maths"
     ticker = str(input("Please enter the ticker:\n: "))
-    em1 = float(input("Enter your entry point in dollars:\n$: "))
+    em1 = [float(x) for x in input("Please enter the entry point. *add spaces for dca*\n$: ").split()]
+    em1 = (sum(em1) / len(em1))
     eVol = float(input("Please enter number of " + ticker.upper() + " purchased:\n#: "))
     clear()
     print("""How would you like to setup your trade?\n
     1.) 3:6
     2.) 6:12
+    3.) Custom
     """)
     eRatio = int(input("Please select an option: "))
+    clear()
     if eRatio == 1:
         emTake = (em1 * 0.06) + em1
         emStop = em1 - (em1 * 0.03)
-        ePos = em1 * eVol
-        emProfit = (emTake - em1) * eVol
-        emLoss = (em1 - emStop) * eVol
-        eFut = emProfit + ePos
     elif eRatio == 2:
         emTake = (em1 * 0.12) + em1
         emStop = em1 - (em1 * 0.06)
-        ePos = em1 * eVol
-        emProfit = (emTake - em1) * eVol
-        emLoss = (em1 - emStop) * eVol
-        eFut = emProfit + ePos
+    elif eRatio == 3:
+        emTake = float(input("Where will you sell?\n$: "))
+        emStopQ = str(input("Do you want to set a stop loss?(Y/N)\n: "))
+        if emStopQ in y:
+            emStop  = input("Where do you want to set a stop? *for percent of postion add percent sign*\n$: ")
+        if emStopQ in n:
+            emStop = "NA"
     else:
         print("Not a valid option...")
         loady(1, 15)
         eMath()
-    result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nVolume: x" + str(eVol) + "\nPosition: $" + str(ePos) + "\nFuture Position: $" + str(eFut) + "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
+    ePos = em1 * eVol
+    emProfit = (emTake - em1) * eVol
+    eFut = emProfit + ePos
+    if emStop == "NA":
+        emLoss = "NA"
+    elif "%" in emStop:
+        emStop = emStop.replace("%", "")
+        emStop =  em1 - ((int(emStop) / 100) * em1)
+    emLoss = ((em1 - emStop) * eVol)
+    eFutM = ePos - emLoss
+    result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nVolume: x" + str(eVol) + "\nPosition: $" + str(ePos) + "\nFuture Position: (+)$" + str(eFut) + " | (-)$" + str(eFutM)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
     loady(2, 20)
     print(result)
     f = input("Do you want to log this output? (Y/N) ")
