@@ -64,22 +64,22 @@ Welcome to Quick Maths!\n
     0.) To Exit.\n\n
     X.) Log Tools.
         """)
-        a = input("Please select an option: ")
-        if a == "1":
+        introSelection = input("Please select an option: ")
+        if introSelection == "1":
             pChange()
             continue
-        if a == "2":
+        if introSelection == "2":
             dca()
             continue
-        if a == "3":
+        if introSelection == "3":
             eMath()
             continue
-        if a == "4":
+        if introSelection == "4":
             iMath()
             continue
-        if a.lower() == "x":
+        if introSelection.lower() == "x":
             logtools()
-        if a == "0":
+        if introSelection == "0":
             exit()
         else:
             clear()
@@ -92,11 +92,11 @@ Welcome to Quick Maths!\n
 def pChange():
     loady(3, 10)
     func = "Percent Change Calculator"
-    pc1 = float(input("Enter the current price: "))
-    pc2 = float(input("Enter the final price: "))
-    pc3 = (pc1 - pc2) / pc1
-    final = "%.0f%%" % (-100 * pc3)
-    result = "Current Price: $" + str(pc1) + "\nFinal Price: $" + str(pc2) + "\nPercent Change: " + final + "\n"
+    pcCurrent = float(input("Enter the current price: "))
+    pcFinal = float(input("Enter the final price: "))
+    pcChange = (pcCurrent - pcFinal) / pcCurrent
+    pcFormat = "%.0f%%" % (-100 * pcChange)
+    result = "Current Price: $" + str(pcCurrent) + "\nFinal Price: $" + str(pcFinal) + "\nPercent Change: " + pcFormat + "\n"
     clear()
     loady(2, 20)
     print(result)
@@ -112,10 +112,10 @@ def pChange():
 def dca():
     loady(3, 10)
     func = "Dollar Cost Average"
-    dca1 = [float(x) for x in input("Please enter dollar amounts with spaces inbetween.\n$: ").split()]
-    dca2 = (sum(dca1) / len(dca1))
-    values = "Values: $" + str(dca1)
-    result = "Average: $" + str(dca2) + "\n"
+    dcaInput = [float(x) for x in input("Please enter dollar amounts with spaces inbetween.\n$: ").split()]
+    dcaAverage = (sum(dcaInput) / len(dcaInput))
+    values = "Values: $" + str(dcaInput)
+    result = "Average: $" + str(dcaAverage) + "\n"
     loady(2, 20)
     print(values)
     print(result)
@@ -131,46 +131,46 @@ def dca():
 def eMath():
     loady(3, 10)
     func = "Entry Maths"
-    ticker = str(input("Please enter the ticker:\n: "))
-    em1 = [float(x) for x in input("Please enter the entry point. *add spaces for dca*\n$: ").split()]
-    em1 = (sum(em1) / len(em1))
-    eVol = float(input("Please enter number of " + ticker.upper() + " purchased:\n#: "))
+    emTicker = str(input("Please enter the emTicker:\n: "))
+    emEntry = [float(x) for x in input("Please enter the entry point. *add spaces for dca*\n$: ").split()]
+    emEntry = (sum(emEntry) / len(emEntry))
+    emVolume = float(input("Please enter number of " + emTicker.upper() + " purchased:\n#: "))
     clear()
     print("""How would you like to setup your trade?\n
     1.) 3:6
     2.) 6:12
     3.) Custom
     """)
-    eRatio = int(input("Please select an option: "))
+    emTradeParams = int(input("Please select an option: "))
     clear()
-    if eRatio == 1:
-        emTake = (em1 * 0.06) + em1
-        emStop = em1 - (em1 * 0.03)
-    elif eRatio == 2:
-        emTake = (em1 * 0.12) + em1
-        emStop = em1 - (em1 * 0.06)
-    elif eRatio == 3:
+    if emTradeParams == 1:
+        emTake = (emEntry * 0.06) + emEntry
+        emStop = emEntry - (emEntry * 0.03)
+    elif emTradeParams == 2:
+        emTake = (emEntry * 0.12) + emEntry
+        emStop = emEntry - (emEntry * 0.06)
+    elif emTradeParams == 3:
         emTake = float(input("Where will you sell?\n$: "))
-        emStopQ = str(input("Do you want to set a stop loss?(Y/N)\n: "))
-        if emStopQ in y:
+        emStopIN = str(input("Do you want to set a stop loss?(Y/N)\n: "))
+        if emStopIN in y:
             emStop  = input("Where do you want to set a stop? *for percent of postion add percent sign*\n$: ")
-        if emStopQ in n:
+        if emStopIN in n:
             emStop = "NA"
     else:
         print("Not a valid option...")
         loady(1, 15)
         eMath()
-    ePos = em1 * eVol
-    emProfit = (emTake - em1) * eVol
-    eFut = emProfit + ePos
+    emPosition = emEntry * emVolume
+    emProfit = (emTake - emEntry) * emVolume
+    emFutPlus = emProfit + emPosition
     if emStop == "NA":
         emLoss = "NA"
     elif "%" in emStop:
         emStop = emStop.replace("%", "")
-        emStop =  em1 - ((int(emStop) / 100) * em1)
-    emLoss = ((em1 - emStop) * eVol)
-    eFutM = ePos - emLoss
-    result = "Ticker: " + str(ticker.upper()) + "\n\nEntry: $" + str(em1) + "\nVolume: x" + str(eVol) + "\nPosition: $" + str(ePos) + "\nFuture Position: (+)$" + str(eFut) + " | (-)$" + str(eFutM)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
+        emStop =  emEntry - ((int(emStop) / 100) * emEntry)
+    emLoss = ((emEntry - emStop) * emVolume)
+    emFutMinus = emPosition - emLoss
+    result = "emTicker: " + str(emTicker.upper()) + "\n\nEntry: $" + str(emEntry) + "\nVolume: x" + str(emVolume) + "\nPosition: $" + str(emPosition) + "\nFuture Position: (+)$" + str(emFutPlus) + " | (-)$" + str(emFutMinus)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
     loady(2, 20)
     print(result)
     f = input("Do you want to log this output? (Y/N) ")
@@ -185,11 +185,11 @@ def eMath():
 def iMath():
     loady(3, 10)
     func = "Interest Calculator"
-    im1 = float(input("Please enter the interest rate:\n%: "))
-    im2 = float(input("Please enter borrowed amount:\n$: "))
+    imRate = float(input("Please enter the interest rate:\n%: "))
+    imVolume = float(input("Please enter borrowed amount:\n$: "))
     loady(2, 7)
-    im3 = (im1 / 100) * im2
-    result = "Interest Rate: " + str(im1) + "%\n" + "Borrowed Amount: $" + str(im2) + "\n" +"Interest Expense: $" + str(im3) + "\n"
+    im3 = (imRate / 100) * imVolume
+    result = "Interest Rate: " + str(imRate) + "%\n" + "Borrowed Amount: $" + str(imVolume) + "\n" +"Interest Expense: $" + str(im3) + "\n"
     print(result)
     f = input("Do you want to log this output? (Y/N) ")        
     if f.lower() in y:
