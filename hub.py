@@ -58,10 +58,10 @@ def intro():
     while True:
         print("""
 Welcome to Quick Maths!\n
-    1.) Percent Change Calculator.        4.) Interest Calculator.
-    2.) Dollar Cost Averager.             5.) Tax Calculator.
-    3.) Entry Maths.                      6.) Bill Calculator.\n
-                          0.) To Exit.\n\n
+    1.) Percent Change.        4.) Interest.
+    2.) Dollar Cost.           5.) Taxes.
+    3.) Entry Maths.           6.) Bills.\n
+                 0.) To Exit.\n\n
     X.) Log Tools.
         """)
         introSelection = input("Please select an option\n: ")
