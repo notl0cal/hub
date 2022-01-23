@@ -57,12 +57,12 @@ def intro():
     loady("load", 15)
     while True:
         print("""
-      Welcome to Quick Maths!\n
+        Welcome to Quick Maths!\n
 1.) Percent Change.        4.) Interest.
 2.) Dollar Cost.           5.) Taxes.
 3.) Entry Maths.           6.) Bills.\n
              0.) To Exit.\n\n
-    X.) Log Tools.
+X.) Log Settings.
         """)
         introSelection = input("Please select an option\n: ")
         if introSelection == "1":
