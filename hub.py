@@ -6,6 +6,8 @@ import math
 import time
 from sys import platform
 from datetime import datetime
+
+from matplotlib import backend_managers
 #global variable declarations
 y = ["Y", "y", "YES", "yes", "Yes", "1"]
 n = ["N", "n", "NO", "no", "No", "0"]
@@ -24,27 +26,27 @@ def exit():
 def loady(msg:int, times:int):
     clear()
     animation = "|/-\\"
-    if str(msg) == "1":
+    if str(msg) == "reset":
         for i in range(times):
             time.sleep(0.1)
             sys.stdout.write("\r" + "Resetting... " + animation[i % len(animation)])
             sys.stdout.flush()
-    if str(msg) == "2":
+    if str(msg) == "math":
         for i in range(times):
             time.sleep(0.1)
             sys.stdout.write("\r" + "Doing Maths... " + animation[i % len(animation)])
             sys.stdout.flush()
-    if str(msg) == "3":
+    if str(msg) == "moduleLoad":
         for i in range(times):
             time.sleep(0.1)
             sys.stdout.write("\r" + "Loading Module... " + animation[i % len(animation)])
             sys.stdout.flush()
-    if str(msg) == "4":
+    if str(msg) == "log":
         for i in range(times):
             time.sleep(0.1)
             sys.stdout.write("\r" + "Logging... " + animation[i % len(animation)])
             sys.stdout.flush()
-    if str(msg) == "5":
+    if str(msg) == "load":
         for i in range(times):
             time.sleep(0.1)
             sys.stdout.write("\r" + "Loading...  " + animation[i % len(animation)])
@@ -52,19 +54,17 @@ def loady(msg:int, times:int):
     clear()
 #main function
 def intro():
-    loady(5, 15)
-    c = 1
-    while c > 0:
+    loady("load", 15)
+    while True:
         print("""
 Welcome to Quick Maths!\n
-    1.) Percent Change Calculator.\n
-    2.) Dollar Cost Averager.\n
-    3.) Entry Maths.\n
-    4.) Interest Calculator.\n
-    0.) To Exit.\n\n
+    1.) Percent Change Calculator.        4.) Interest Calculator.
+    2.) Dollar Cost Averager.             5.) Tax Calculator.
+    3.) Entry Maths.                      6.) Bill Calculator.\n
+                          0.) To Exit.\n\n
     X.) Log Tools.
         """)
-        introSelection = input("Please select an option: ")
+        introSelection = input("Please select an option\n: ")
         if introSelection == "1":
             pChange()
             continue
@@ -77,59 +77,65 @@ Welcome to Quick Maths!\n
         if introSelection == "4":
             iMath()
             continue
+        if introSelection == "5":
+            taxCalculator()
+            continue
+        if introSelection == "6":
+            billCalculator()
+            continue
         if introSelection.lower() == "x":
-            logtools()
+            logTools()
         if introSelection == "0":
             exit()
         else:
             clear()
-            d = input("Not a valid option. Want to try again? (Y/N)")
-            if d.lower() in y:
+            invalidInput = input("Not a valid option. Want to try again? (Y/N)\n: ")
+            if invalidInput.lower() in y:
                 intro()
             else:
                 exit()
 #referenced functions
 def pChange():
-    loady(3, 10)
+    loady("moduleLoad", 10)
     func = "Percent Change Calculator"
-    pcCurrent = float(input("Enter the current price: "))
-    pcFinal = float(input("Enter the final price: "))
+    pcCurrent = float(input("Enter the current price\n: "))
+    pcFinal = float(input("Enter the final price\n: "))
     pcChange = (pcCurrent - pcFinal) / pcCurrent
     pcFormat = "%.0f%%" % (-100 * pcChange)
     result = "Current Price: $" + str(pcCurrent) + "\nFinal Price: $" + str(pcFinal) + "\nPercent Change: " + pcFormat + "\n"
     clear()
-    loady(2, 20)
+    loady("math", 20)
     print(result)
-    f = input("Do you want to log this output? (Y/N) ")
-    if f.lower() in y:
+    logInput = input("Do you want to log this output? (Y/N)\n: ")
+    if logInput.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
-        loady(4, 12)
-        loady(1, 15)
+        loady("log", 12)
+        loady("reset", 15)
     else:
-        loady(1, 15)
+        loady("reset", 15)
         intro()
 def dca():
-    loady(3, 10)
+    loady("moduleLoad", 10)
     func = "Dollar Cost Average"
     dcaInput = [float(x) for x in input("Please enter dollar amounts with spaces inbetween.\n$: ").split()]
     dcaAverage = (sum(dcaInput) / len(dcaInput))
-    values = "Values: $" + str(dcaInput)
+    dcaValues = "Values: $" + str(dcaInput)
     result = "Average: $" + str(dcaAverage) + "\n"
-    loady(2, 20)
-    print(values)
+    loady("math", 20)
+    print(dcaValues)
     print(result)
-    f = input("Do you want to log this output? (Y/N) ")
-    if f.lower() in y:
+    logInput = input("Do you want to log this output? (Y/N)\n: ")
+    if logInput.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
-        loady(4, 12)
-        loady(1, 15)
+        loady("log", 12)
+        loady("reset", 15)
     else:
-        loady(1, 15)
+        loady("reset", 15)
         intro()
 def eMath():
-    loady(3, 10)
+    loady("moduleLoad", 10)
     func = "Entry Maths"
     emTicker = str(input("Please enter the emTicker:\n: "))
     emEntry = [float(x) for x in input("Please enter the entry point. *add spaces for dca*\n$: ").split()]
@@ -141,7 +147,7 @@ def eMath():
     2.) 6:12
     3.) Custom
     """)
-    emTradeParams = int(input("Please select an option: "))
+    emTradeParams = int(input("Please select an option\n: "))
     clear()
     if emTradeParams == 1:
         emTake = (emEntry * 0.06) + emEntry
@@ -158,7 +164,7 @@ def eMath():
             emStop = "NA"
     else:
         print("Not a valid option...")
-        loady(1, 15)
+        loady("reset", 15)
         eMath()
     emPosition = emEntry * emVolume
     emProfit = (emTake - emEntry) * emVolume
@@ -171,69 +177,125 @@ def eMath():
     emLoss = ((emEntry - emStop) * emVolume)
     emFutMinus = emPosition - emLoss
     result = "emTicker: " + str(emTicker.upper()) + "\n\nEntry: $" + str(emEntry) + "\nVolume: x" + str(emVolume) + "\nPosition: $" + str(emPosition) + "\nFuture Position: (+)$" + str(emFutPlus) + " | (-)$" + str(emFutMinus)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
-    loady(2, 20)
+    loady("math", 20)
     print(result)
-    f = input("Do you want to log this output? (Y/N) ")
-    if f.lower() in y:
+    logInput = input("Do you want to log this output? (Y/N)\n: ")
+    if logInput.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func  + "\n" + result)
-        loady(4, 12)
-        loady(1, 15)
+        loady("log", 12)
+        loady("reset", 15)
     else:
-        loady(1, 15)
+        loady("reset", 15)
         intro()
 def iMath():
-    loady(3, 10)
+    loady("moduleLoad", 10)
     func = "Interest Calculator"
     imRate = float(input("Please enter the interest rate:\n%: "))
     imVolume = float(input("Please enter borrowed amount:\n$: "))
-    loady(2, 7)
-    im3 = (imRate / 100) * imVolume
-    result = "Interest Rate: " + str(imRate) + "%\n" + "Borrowed Amount: $" + str(imVolume) + "\n" +"Interest Expense: $" + str(im3) + "\n"
+    loady("math", 7)
+    imResult = (imRate / 100) * imVolume
+    result = "Interest Rate: " + str(imRate) + "%\n" + "Borrowed Amount: $" + str(imVolume) + "\n" +"Interest Expense: $" + str(imResult) + "\n"
     print(result)
-    f = input("Do you want to log this output? (Y/N) ")        
-    if f.lower() in y:
+    logInput = input("Do you want to log this output? (Y/N)\n: ")        
+    if logInput.lower() in y:
         with open("trade.log", "a+") as file:
             file.write(date + " | " + func + "\n" + result)
-        loady(4, 12)
-        loady(1, 15)
+        loady("log", 12)
+        loady("reset", 15)
     else:
-        loady(1, 15)
+        loady("reset", 15)
         intro()
-def logtools():
-    loady(3,10)
+def taxCalculator():
+    loady("moduleLoad",10)
+    func = "Tax Calculator"
+    tcVolume = int(input("How much did you spend?\n$ "))
+    clear()
+    print("""Which Taxes?
+    1.) Sales
+    2.) Sales + MJ
+    """)
+    tcParam = input("Please select an option.\n: ")
+    if tcParam == "1":
+        func = "Sales Tax Calculator"
+        tcResult = tcVolume + (tcVolume * 0.0825)
+        result = "Result: " + str(tcResult)
+    elif tcParam == "2":
+        func = "MJ Tax Calculator"
+        tcResult = tcVolume + (tcVolume * 0.1625)
+        result = "Result: " + str(tcResult) +"\n"
+    loady("math",7)
+    print(result)
+    logInput = input("Do you want to log this output? (Y/N)\n: ")        
+    if logInput.lower() in y:
+        with open("trade.log", "a+") as file:
+            file.write(date + " | " + func + "\n" + result)
+        loady("log", 12)
+        loady("reset", 15)
+    else:
+        loady("reset", 15)
+        intro()
+def billCalculator():
+    loady("moduleLoad", 10)
+    func = "Bills"
+    bcList = []
+    bcElectric = float(input("Electric Bill\n$ "))
+    bcGas = float(input("Gas Bill\n$ "))
+    bcUtility = float(input("Utility Bill\n$ "))
+    bcInternet = float(input("Internet Bill\n$ "))
+    bcList.append(bcElectric + bcGas + bcUtility + bcInternet)
+    bcSplit = int(input("How are you splitting the bills?\n: "))
+    bcTotal = sum(bcList)
+    bcTSplit = bcTotal / bcSplit
+    bcESplit = bcElectric / bcSplit
+    bcGSplit = bcGas / bcSplit
+    bcUSplit = bcUtility / bcSplit
+    bcISplit = bcInternet / bcSplit
+    result = "Electric Bill: $" + str(bcElectric) + " ($" + str(bcESplit) + ")" + "\nGas Bill: $" + str(bcGas) + " ($" + str(bcGSplit) + ")" + "\nUtility Bill: $" + str(bcUtility) + " ($" + str(bcUSplit) + ")" + "\nInternet Bill: $" + str(bcInternet) + " ($" + str(bcISplit) + ")" + "\n\nTotal: $" + str(bcTotal) + " ($" + str(bcTSplit) + ")\n"
+    loady("math",7)
+    print(result)
+    logInput = input("Do you want to log this output? (Y/N)\n: ")        
+    if logInput.lower() in y:
+        with open("bills.log", "a+") as file:
+            file.write(date + " | " + func + "\n" + result)
+        loady("log", 12)
+        loady("reset", 15)
+    else:
+        loady("reset", 15)
+        intro()
+def logTools():
+    loady("moduleLoad",10)
     while True:
         print("""Log tools:\n
         1.) Read Log.
         2.) Reset Log.
         0.) Back
         """)
-        a = input("How would you like to proceed?: ")
-        if a == "1":
+        logSelection = input("How would you like to proceed?\n: ")
+        if logSelection == "1":
             clear()
             with open("trade.log", "r") as file:
-                p = file.read()
-                print(p)
+                text = file.read()
+                print(text)
             input("Press enter to continue...")
-            logtools()
-        if a == "2":
+            logTools()
+        if logSelection == "2":
             clear()
-            d = input("Are you sure you want to continue? This will reset the log file. (Y/N) ")
-            if d.lower() in y:
-                loady(1, 10)
+            logResetConf = input("Are you sure you want to continue? This will reset the log file. (Y/N)\n: ")
+            if logResetConf.lower() in y:
+                loady("reset", 10)
                 with open("trade.log", "w") as file:
-                    p = file.write("")
-                logtools()
+                    file.write("")
+                logTools()
             else:
-                loady(1, 15)
-                logtools()
-        if a == "0":
+                logTools()
+        if logSelection == "0":
             intro()
         else:
             clear()
-            d = input("Not a valid option. Want to try again? (Y/N)")
-            if d.lower() in y:
-                logtools()
+            invalidInput = input("Not a valid option. Want to try again? (Y/N)\n: ")
+            if invalidInput.lower() in y:
+                logTools()
             else:
                 intro()
 #main function call
