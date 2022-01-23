@@ -57,11 +57,11 @@ def intro():
     loady("load", 15)
     while True:
         print("""
-Welcome to Quick Maths!\n
-    1.) Percent Change.        4.) Interest.
-    2.) Dollar Cost.           5.) Taxes.
-    3.) Entry Maths.           6.) Bills.\n
-                 0.) To Exit.\n\n
+      Welcome to Quick Maths!\n
+1.) Percent Change.        4.) Interest.
+2.) Dollar Cost.           5.) Taxes.
+3.) Entry Maths.           6.) Bills.\n
+             0.) To Exit.\n\n
     X.) Log Tools.
         """)
         introSelection = input("Please select an option\n: ")
@@ -137,7 +137,7 @@ def dca():
 def eMath():
     loady("moduleLoad", 10)
     func = "Entry Maths"
-    emTicker = str(input("Please enter the emTicker:\n: "))
+    emTicker = str(input("Please enter the Ticker:\n: "))
     emEntry = [float(x) for x in input("Please enter the entry point. *add spaces for dca*\n$: ").split()]
     emEntry = (sum(emEntry) / len(emEntry))
     emVolume = float(input("Please enter number of " + emTicker.upper() + " purchased:\n#: "))
@@ -176,7 +176,7 @@ def eMath():
         emStop =  emEntry - ((int(emStop) / 100) * emEntry)
     emLoss = ((emEntry - emStop) * emVolume)
     emFutMinus = emPosition - emLoss
-    result = "emTicker: " + str(emTicker.upper()) + "\n\nEntry: $" + str(emEntry) + "\nVolume: x" + str(emVolume) + "\nPosition: $" + str(emPosition) + "\nFuture Position: (+)$" + str(emFutPlus) + " | (-)$" + str(emFutMinus)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
+    result = "Ticker: " + str(emTicker.upper()) + "\n\nEntry: $" + str(emEntry) + "\nVolume: x" + str(emVolume) + "\nPosition: $" + str(emPosition) + "\nFuture Position: (+)$" + str(emFutPlus) + " | (-)$" + str(emFutMinus)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
     loady("math", 20)
     print(result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")
