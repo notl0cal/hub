@@ -6,7 +6,6 @@ import math
 import time
 from sys import platform
 from datetime import datetime
-
 from matplotlib import backend_managers
 #global variable declarations
 y = ["Y", "y", "YES", "yes", "Yes", "1"]
@@ -56,12 +55,11 @@ def loady(msg:int, times:int):
 def intro():
     loady("load", 15)
     while True:
-        print("""
-        Welcome to Quick Maths!\n
+        print("""        Welcome to Quick Maths!\n
 1.) Percent Change.        4.) Interest.
 2.) Dollar Cost.           5.) Taxes.
 3.) Entry Maths.           6.) Bills.\n
-             0.) To Exit.\n\n
+             0.) To Exit.\n
 X.) Log Settings.
         """)
         introSelection = input("Please select an option\n: ")
@@ -137,7 +135,7 @@ def dca():
 def eMath():
     loady("moduleLoad", 10)
     func = "Entry Maths"
-    emTicker = str(input("Please enter the Ticker:\n: "))
+    emTicker = str(input("Please enter the ticker:\n: "))
     emEntry = [float(x) for x in input("Please enter the entry point. *add spaces for dca*\n$: ").split()]
     emEntry = (sum(emEntry) / len(emEntry))
     emVolume = float(input("Please enter number of " + emTicker.upper() + " purchased:\n#: "))
@@ -159,7 +157,7 @@ def eMath():
         emTake = float(input("Where will you sell?\n$: "))
         emStopIN = str(input("Do you want to set a stop loss?(Y/N)\n: "))
         if emStopIN in y:
-            emStop  = input("Where do you want to set a stop? *for percent of postion add percent sign*\n$: ")
+            emStop  = input("Where do you want to set a stop? *for percent of entry postion add percent sign*\n$: ")
         if emStopIN in n:
             emStop = "NA"
     else:
@@ -172,8 +170,7 @@ def eMath():
     if emStop == "NA":
         emLoss = "NA"
     elif "%" in emStop:
-        emStop = emStop.replace("%", "")
-        emStop =  emEntry - ((int(emStop) / 100) * emEntry)
+        emStop =  emEntry - ((int(emStop.replace("%", "")) / 100) * emEntry)
     emLoss = ((emEntry - emStop) * emVolume)
     emFutMinus = emPosition - emLoss
     result = "Ticker: " + str(emTicker.upper()) + "\n\nEntry: $" + str(emEntry) + "\nVolume: x" + str(emVolume) + "\nPosition: $" + str(emPosition) + "\nFuture Position: (+)$" + str(emFutPlus) + " | (-)$" + str(emFutMinus)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
