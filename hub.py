@@ -6,8 +6,6 @@ import math
 import time
 from sys import platform
 from datetime import datetime
-
-from matplotlib import backend_managers
 #global variable declarations
 y = ["Y", "y", "YES", "yes", "Yes", "1"]
 n = ["N", "n", "NO", "no", "No", "0"]
