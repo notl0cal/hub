@@ -135,9 +135,13 @@ def eMath():
     loady("moduleLoad", 10)
     func = "Entry Maths"
     emTicker = str(input("Please enter the ticker:\n: "))
-    emEntry = [float(x) for x in input("Please enter the entry point. *add spaces for dca*\n$: ").split()]
-    emEntry = (sum(emEntry) / len(emEntry))
-    emVolume = float(input("Please enter number of " + emTicker.upper() + " purchased:\n#: "))
+    emEntry = [float(x) for x in input("Please enter the entry point. *add spaces for average.*\n*Correspond Volumes with Price of Share.* (x)\n\n$: ").split()]
+    emVolume = [float(x) for x in input("x: ").split()]
+    emTotalVolume = sum(emVolume)
+    dcaTotal = 0
+    for v, p in zip(emEntry, emVolume):
+        dcaTotal += (v * p)
+    emEntry = dcaTotal / emTotalVolume
     clear()
     print("""How would you like to setup your trade?\n
     1.) 3:6
@@ -163,16 +167,16 @@ def eMath():
         print("Not a valid option...")
         loady("reset", 15)
         eMath()
-    emPosition = emEntry * emVolume
-    emProfit = (emTake - emEntry) * emVolume
+    emPosition = emEntry * emTotalVolume
+    emProfit = (emTake - emEntry) * emTotalVolume
     emFutPlus = emProfit + emPosition
     if emStop == "NA":
         emLoss = "NA"
     elif "%" in emStop:
         emStop =  emEntry - ((int(emStop.replace("%", "")) / 100) * emEntry)
-    emLoss = ((emEntry - emStop) * emVolume)
+    emLoss = ((emEntry - emStop) * emTotalVolume)
     emFutMinus = emPosition - emLoss
-    result = "Ticker: " + str(emTicker.upper()) + "\n\nEntry: $" + str(emEntry) + "\nVolume: x" + str(emVolume) + "\nPosition: $" + str(emPosition) + "\nFuture Position: (+)$" + str(emFutPlus) + " | (-)$" + str(emFutMinus)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
+    result = "Ticker: " + str(emTicker.upper()) + "\n\nEntry: $" + str(emEntry) + "\nVolume: x" + str(emTotalVolume) + "\nPosition: $" + str(emPosition) + "\nFuture Position: (+)$" + str(emFutPlus) + " | (-)$" + str(emFutMinus)+ "\n\nTake: $" + str(emTake) + "\nStop: $" + str(emStop) + "\n\nProfit: $" + str(emProfit) + "\nLoss: $" + str(emLoss) + "\n"
     loady("math", 20)
     print(result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")
