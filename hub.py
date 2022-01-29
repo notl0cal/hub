@@ -99,7 +99,7 @@ def pChange():
     pcFinal = float(input("Enter the final price\n: "))
     pcChange = (pcCurrent - pcFinal) / pcCurrent
     pcFormat = "%.0f%%" % (-100 * pcChange)
-    result = "Current Price: $" + str(pcCurrent) + "\nFinal Price: $" + str(pcFinal) + "\nPercent Change: " + pcFormat + "\n"
+    result = "Current Price: ${0}\nFinal Price: ${1}\nPercent Change: {2}\n".format(str(pcCurrent), str(pcFinal), str(pcFormat))
     clear()
     loady("math", 20)
     print(result)
@@ -116,87 +116,112 @@ def dca():
     loady("moduleLoad", 10)
     func = "Dollar Cost Average"
     dcaSharePrices = [float(x) for x in input("Please enter dollar amounts with spaces inbetween. *correspond volume(x) with share price($).*\n$: ").split()]
-    dcaVolume = [float(x) for x in input("x: ").split()]
-    dcaTotalVolume = sum(dcaVolume)
-    dcaTotal = 0
-    for v, p in zip(dcaSharePrices, dcaVolume):
-        dcaTotal += (v * p)
-    dcaAvg = dcaTotal / dcaTotalVolume
-    dcaValues = "Values: $" + str(dcaSharePrices).replace("]", "") + "\n"
-    dcaVolumes = "Volumes: x" + str(dcaVolume).replace("]", "") + "\n"
-    result = dcaValues.replace("[", "") + dcaVolumes.replace("[", "") + "Average: $" + str(dcaAvg) + "\n"
-    loady("math", 20)
-    print(result)
-    logInput = input("Do you want to log this output? (Y/N)\n: ")
-    if logInput.lower() in y:
-        with open("trade.log", "a+") as file:
-            file.write(date + " | " + func + "\n" + result)
-        loady("log", 12)
-        loady("reset", 15)
-    else:
-        loady("reset", 15)
-        intro()
-def eMath():
-    loady("moduleLoad", 10)
-    func = "Entry Maths"
-    emTicker = str(input("Please enter the ticker:\n: "))
-    emValues = [float(x) for x in input("Please enter the entry point. *add spaces for average / correspond volume(x) with share price($).*\n$: ").split()]
-    emVolumes = [float(x) for x in input("x: ").split()]
-    emTotalVolume = sum(emVolumes)
-    dcaTotal = 0
-    for v, p in zip(emValues, emVolumes):
-        dcaTotal += (v * p)
-    emAvg = dcaTotal / emTotalVolume
-    clear()
-    while True:
-        print("""How would you like to setup your trade?\n
-        1.) 3:6
-        2.) 6:12
-        3.) Custom
-        """)
-        emTradeParams = int(input("Please select an option\n: "))
-        clear()
-        if emTradeParams == 1:
-            emTake = (emAvg * 0.06) + emAvg
-            emStop = emAvg - (emAvg * 0.03)
-        elif emTradeParams == 2:
-            emTake = (emAvg * 0.12) + emAvg
-            emStop = emAvg - (emAvg * 0.06)
-        elif emTradeParams == 3:
-            emTake = float(input("Where will you sell?\n$: "))
-            emStopIN = str(input("Do you want to set a stop loss?(Y/N)\n: "))
-            if emStopIN in y:
-                emStop  = input("Where do you want to set a stop? *for percent of entry postion add percent sign*\n$: ")
-            elif emStopIN in n:
-                emStop = "NA"
-            else:
-                clear()
-                continue
-        else:
-            print("Not a valid option...")
-            loady("reset", 15)
-            eMath()
-        emPosition = emAvg * emTotalVolume
-        emProfit = (emTake - emAvg) * emTotalVolume
-        emFutPlus = emProfit + emPosition
-        if emStop == "NA":
-            emLoss = "NA"
-        elif "%" in emStop:
-            emStop =  emAvg - ((int(emStop.replace("%", "")) / 100) * emAvg)
-        emLoss = ((emAvg - emStop) * emTotalVolume)
-        emFutMinus = emPosition - emLoss
-        for j in ["[", "]"]:
-            emValues = str(emValues).replace(j, "")
-            emVolumes = str(emVolumes).replace(j, "")
-        result = "Ticker: " + str(emTicker.upper()) + "\n\n\tValues: $" + emValues + "\n\tVolumes: x" + emVolumes + "\n\n\tAverage: $" + str(emAvg) + "\n\tTotal Volume: x" + str(emTotalVolume) + "\n\tPosition: $" + str(emPosition) + "\n\tFuture Position: (+)$" + str(emFutPlus) + " | (-)$" + str(emFutMinus) + "\n\n\tTake: $" + str(emTake) + "\n\tStop: $" + str(emStop) + "\n\n\tProfit: $" + str(emProfit) + "\n\tLoss: $" + str(emLoss) + "\n"
+    dcaVolumes = [float(x) for x in input("x: ").split()]
+    while len(dcaSharePrices) == len(dcaVolumes):
+        dcaTotalVolume = sum(dcaVolumes)
+        dcaTotal = 0
+        for v, p in zip(dcaSharePrices, dcaVolumes):
+            dcaTotal += (v * p)
+            for j in ["[", "]"]:
+                dcaSharePrices = str(dcaSharePrices).replace(j, "")
+                dcaVolumes = str(dcaVolumes).replace(j, "")
+        dcaAvg = dcaTotal / dcaTotalVolume
+        result = "Values: ${0}\nVolumes: x{1}\nAverage: {2}".format(dcaSharePrices, dcaVolumes, str(dcaAvg))
         loady("math", 20)
         print(result)
         logInput = input("Do you want to log this output? (Y/N)\n: ")
         if logInput.lower() in y:
             with open("trade.log", "a+") as file:
-                file.write(date + " | " + func  + "\n" + result)
+                file.write(date + " | " + func + "\n" + result)
             loady("log", 12)
             loady("reset", 15)
+        else:
+            loady("reset", 15)
+            intro()
+    else:
+        a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
+        if a in y:
+            dca()
+        else:
+            loady("reset", 15)
+            intro()
+def eMath():
+    loady("moduleLoad", 10)
+    func = "Entry Maths"
+    emTicker = str(input("Please enter the ticker:\n: "))
+    if emTicker.isalpha():
+        emValues = [float(x) for x in input("Please enter the entry point. *add spaces for average / correspond volume(x) with share price($).*\n$: ").split()]
+        emVolumes = [float(x) for x in input("x: ").split()]
+        while len(emValues) == len(emVolumes):
+            emTotalVolume = sum(emVolumes)
+            dcaTotal = 0
+            for v, p in zip(emValues, emVolumes):
+                dcaTotal += (v * p)
+            emAvg = dcaTotal / emTotalVolume
+            clear()
+            while True:
+                print("""How would you like to setup your trade?\n
+                1.) 3:6
+                2.) 6:12
+                3.) Custom
+                """)
+                emTradeParams = int(input("Please select an option\n: "))
+                clear()
+                if emTradeParams == 1:
+                    emTake = (emAvg * 0.06) + emAvg
+                    emStop = emAvg - (emAvg * 0.03)
+                elif emTradeParams == 2:
+                    emTake = (emAvg * 0.12) + emAvg
+                    emStop = emAvg - (emAvg * 0.06)
+                elif emTradeParams == 3:
+                    emTake = float(input("Where will you sell?\n$: "))
+                    emStopIN = str(input("Do you want to set a stop loss?(Y/N)\n: "))
+                    if emStopIN in y:
+                        emStop  = input("Where do you want to set a stop? *for percent of entry postion add percent sign*\n$: ")
+                    elif emStopIN in n:
+                        emStop = "NA"
+                    else:
+                        clear()
+                        continue
+                else:
+                    print("Not a valid option...")
+                    loady("reset", 15)
+                    eMath()
+                emPosition = emAvg * emTotalVolume
+                emProfit = (emTake - emAvg) * emTotalVolume
+                emFutPlus = emProfit + emPosition
+                if emStop == "NA":
+                    emLoss = "NA"
+                elif "%" in emStop:
+                    emStop =  emAvg - ((float(emStop.replace("%", "")) / 100) * emAvg)
+                emLoss = ((emAvg - emStop) * emTotalVolume)
+                emFutMinus = emPosition - emLoss
+                for j in ["[", "]"]:
+                    emValues = str(emValues).replace(j, "")
+                    emVolumes = str(emVolumes).replace(j, "")
+                result = "Ticker:{0}\n\n\tValues: ${1}\n\tVolumes: x{2}\n\n\tAverage: ${3}\n\tTotal Volume: x{4}\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
+                loady("math", 20)
+                print(result)
+                logInput = input("Do you want to log this output? (Y/N)\n: ")
+                if logInput.lower() in y:
+                    with open("trade.log", "a+") as file:
+                        file.write(date + " | " + func  + "\n" + result)
+                    loady("log", 12)
+                    loady("reset", 15)
+                else:
+                    loady("reset", 15)
+                    intro()
+        else:
+            a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
+            if a in y:
+                eMath()
+            else:
+                loady("reset", 15)
+                intro()
+    else:
+        a = input("Invalid Input. Do you want to try again? (Y/N)\n: ")
+        if a in y:
+            eMath()
         else:
             loady("reset", 15)
             intro()
