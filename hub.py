@@ -57,7 +57,8 @@ def intro():
         print("""        Welcome to Quick Maths!\n
 1.) Percent Change.        4.) Interest.
 2.) Dollar Cost.           5.) Taxes.
-3.) Entry Maths.           6.) Bills.\n
+3.) Entry Maths.           6.) Bills.
+7.)                        8.) Mileage\n
              0.) To Exit.\n
 X.) Log Settings.
         """)
@@ -79,6 +80,9 @@ X.) Log Settings.
             continue
         if introSelection == "6":
             billCalculator()
+            continue
+        if introSelection == "8":
+            mlgCalc()
             continue
         if introSelection.lower() == "x":
             logTools()
@@ -259,6 +263,26 @@ def billCalculator():
     else:
         loady("reset", 15)
         intro()
+def mlgCalc():
+    clear()
+    func = "Mileage Calculator"
+    loady("moduleLoad", 10)
+    mMileage = (float(input("Miles to Destination?\n: ")))
+    mMPG = (float(input("Miles per Gallon?\nmpg: ")))
+    mPPG = (float(input("Cost per Gallon?\n$: ")))
+    final = (mMileage / mMPG) * mPPG
+    result = "Miles to Destination: " + str(mMileage) + "\n" + "Miles per Gallon: " + str(mMPG) + "\n" + "Cost per Gallon: $" + str(mPPG) + "\n\n" + "Cost per Trip: $" + str(final) + "\n"
+    loady("math", 7)
+    print(result)
+    logInput = input("Do you want to log this output? (Y/N)\n: ")        
+    if logInput.lower() in y:
+        with open("mileage.log", "a+") as file:
+            file.write(date + " | " + func + "\n" + result)
+        loady("log", 12)
+        loady("reset", 15)
+    else:
+        loady("reset", 15)
+        intro()
 def logTools():
     loady("moduleLoad",10)
     while True:
@@ -270,21 +294,67 @@ def logTools():
         logSelection = input("How would you like to proceed?\n: ")
         if logSelection == "1":
             clear()
-            with open("trade.log", "r") as file:
-                text = file.read()
-                print(text)
-            input("Press enter to continue...")
-            logTools()
+            print("""Log Files:\n
+        1.) trade.log
+        2.) bills.log
+        3.) mileage.log
+            """)
+            logChoice = str(input("Which log file do you want to view?\n: "))
+            if logChoice == "1":
+                with open("trade.log", "r") as file:
+                    text = file.read()
+                    print(text)
+                input("Press enter to continue...")
+                logTools()
+            if logChoice == "2":
+                with open("bills.log", "r") as file:
+                    text = file.read()
+                    print(text)
+                input("Press enter to continue...")
+                logTools()
+            if logChoice == "3":
+                with open("mileage.log", "r") as file:
+                    text = file.read()
+                    print(text)
+                input("Press enter to continue...")
+                logTools()
         if logSelection == "2":
             clear()
-            logResetConf = input("Are you sure you want to continue? This will reset the log file. (Y/N)\n: ")
-            if logResetConf.lower() in y:
-                loady("reset", 10)
-                with open("trade.log", "w") as file:
-                    file.write("")
-                logTools()
-            else:
-                logTools()
+            print("""Log Files:\n
+        1.) trade.log
+        2.) bills.log
+        3.) mileage.log
+            """)
+            rmChoice = str(input("Which log would you like to remove?\n: "))
+            clear()
+            if rmChoice == "1":
+                logResetConf = input("Are you sure you want to continue? This will reset the log file. (Y/N)\n: ")
+                if logResetConf.lower() in y:
+                    loady("reset", 10)
+                    with open("trade.log", "w") as file:
+                        file.write("")
+                    logTools()
+                else:
+                    logTools()
+            elif rmChoice == "2":
+                logResetConf = input("Are you sure you want to continue? This will reset the log file. (Y/N)\n: ")
+                if logResetConf.lower() in y:
+                    loady("reset", 10)
+                    with open("bills.log", "w") as file:
+                        file.write("")
+                    logTools()
+                else:
+                    logTools()
+            elif rmChoice == "3":
+                logResetConf = input("Are you sure you want to continue? This will reset the log file. (Y/N)\n: ")
+                if logResetConf.lower() in y:
+                    loady("reset", 10)
+                    with open("mileage.log", "w") as file:
+                        file.write("")
+                    logTools()
+                else:
+                    logTools()
+            clear()
         if logSelection == "0":
             intro()
         else:
