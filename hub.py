@@ -121,7 +121,7 @@ def dca():
     func = "Dollar Cost Average"
     dcaSharePrices = [float(x) for x in input("Please enter dollar amounts with spaces inbetween. *correspond volume(x) with share price($).*\n$: ").split()]
     dcaVolumes = [float(x) for x in input("x: ").split()]
-    while len(dcaSharePrices) == len(dcaVolumes):
+    if len(dcaSharePrices) == len(dcaVolumes):
         dcaTotalVolume = sum(dcaVolumes)
         dcaTotal = 0
         for v, p in zip(dcaSharePrices, dcaVolumes):
@@ -142,7 +142,7 @@ def dca():
         else:
             loady("reset", 15)
             intro()
-    else:
+    if len(dcaSharePrices) != len(dcaVolumes):
         a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
         if a in y:
             dca()
