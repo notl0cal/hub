@@ -342,18 +342,21 @@ def logTools():
             """)
             logChoice = str(input("Which log file do you want to view?\n: "))
             if logChoice == "1":
+                clear()
                 with open("trade.log", "r") as file:
                     text = file.read()
                     print(text)
                 input("Press enter to continue...")
                 logTools()
             if logChoice == "2":
+                clear()
                 with open("bills.log", "r") as file:
                     text = file.read()
                     print(text)
                 input("Press enter to continue...")
                 logTools()
             if logChoice == "3":
+                clear()
                 with open("mileage.log", "r") as file:
                     text = file.read()
                     print(text)
