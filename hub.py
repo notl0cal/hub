@@ -292,8 +292,8 @@ def billCalculator():
     bcUtility = float(input("Utility Bill\n$ "))
     bcInternet = float(input("Internet Bill\n$ "))
     bcList.append(bcElectric + bcGas + bcUtility + bcInternet)
-    bcSplit = int(input("How are you splitting the bills?\n: "))
     bcTotal = sum(bcList)
+    bcSplit = int(input("How are you splitting the bills?\n: "))
     bcTSplit = bcTotal / bcSplit
     bcESplit = bcElectric / bcSplit
     bcGSplit = bcGas / bcSplit
