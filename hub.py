@@ -55,10 +55,10 @@ def intro():
     loady("load", 15)
     while True:
         print("""        Welcome to Quick Maths!\n
-1.) Percent Change.        4.) Interest.
-2.) Dollar Cost.           5.) Taxes.
-3.) Entry Maths.           6.) Bills.
-7.)                        8.) Mileage\n
+1.) Percent Change.        5.) Interest.
+2.) Dollar Cost.           6.) Taxes.
+3.) Entry Maths.           7.) Bills.
+4.)                        8.) Mileage\n
              0.) To Exit.\n
 X.) Log Settings.
         """)
@@ -72,13 +72,16 @@ X.) Log Settings.
         if introSelection == "3":
             eMath()
             continue
-        if introSelection == "4":
+#       if introSelection == "4":
+#           placeholder()
+#           continue
+        if introSelection == "5":
             iMath()
             continue
-        if introSelection == "5":
+        if introSelection == "6":
             taxCalculator()
             continue
-        if introSelection == "6":
+        if introSelection == "7":
             billCalculator()
             continue
         if introSelection == "8":
