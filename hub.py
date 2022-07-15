@@ -206,7 +206,7 @@ def eMath():
                 for j in ["[", "]"]:
                     emValues = str(emValues).replace(j, "")
                     emVolumes = str(emVolumes).replace(j, "")
-                result = "Ticker:{0}\n\n\tValues: ${1}\n\tVolumes: x{2}\n\n\tAverage: ${3}\n\tTotal Volume: x{4}\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
+                result = "Ticker: {0}\n\n\tValues: ${1}\n\tVolumes: x{2}\n\n\tAverage: ${3}\n\tTotal Volume: x{4}\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
                 loady("math", 20)
                 print(result)
                 logInput = input("Do you want to log this output? (Y/N)\n: ")
