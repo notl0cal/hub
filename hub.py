@@ -239,7 +239,9 @@ def iMath():
     imVolume = float(input("Please enter borrowed amount:\n$: "))
     loady("math", 7)
     imResult = (imRate / 100) * imVolume
-    result = "Interest Rate: " + str(imRate) + "%\n" + "Borrowed Amount: $" + str(imVolume) + "\n" +"Interest Expense: $" + str(imResult) + "\n"
+    imTotal = (imVolume + imResult)
+   # result = "Interest Rate: " + str(imRate) + "%\n" + "Borrowed Amount: $" + str(imVolume) + "\n" +"Interest Expense: $" + str(imResult) + "\n"
+    result = "Interest Rate: {0}%\nBorrowed Amount: ${1}\nInterest Expense: ${2}\n\nTotal Due: ${3}".format(str(imRate), str(imVolume), str(imResult), str(imTotal))
     print(result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
     if logInput.lower() in y:
@@ -264,10 +266,12 @@ def taxCalculator():
         func = "Sales Tax Calculator"
         tcResult = tcVolume + (tcVolume * 0.0825)
         result = "Result: " + str(tcResult)
+        result = "Result: {0}\n".format(tcResult)
     elif tcParam == "2":
         func = "MJ Tax Calculator"
         tcResult = tcVolume + (tcVolume * 0.1625)
-        result = "Result: " + str(tcResult) +"\n"
+        #result = "Result: " + str(tcResult) +"\n"
+        result = "Result: {0}\n".format(tcResult)
     loady("math",7)
     print(result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
@@ -295,7 +299,8 @@ def billCalculator():
     bcGSplit = bcGas / bcSplit
     bcUSplit = bcUtility / bcSplit
     bcISplit = bcInternet / bcSplit
-    result = "Electric Bill: $" + str(bcElectric) + " ($" + str(bcESplit) + ")" + "\nGas Bill: $" + str(bcGas) + " ($" + str(bcGSplit) + ")" + "\nUtility Bill: $" + str(bcUtility) + " ($" + str(bcUSplit) + ")" + "\nInternet Bill: $" + str(bcInternet) + " ($" + str(bcISplit) + ")" + "\n\nTotal: $" + str(bcTotal) + " ($" + str(bcTSplit) + ")\n"
+    #result = "Electric Bill: $" + str(bcElectric) + " ($" + str(bcESplit) + ")" + "\nGas Bill: $" + str(bcGas) + " ($" + str(bcGSplit) + ")" + "\nUtility Bill: $" + str(bcUtility) + " ($" + str(bcUSplit) + ")" + "\nInternet Bill: $" + str(bcInternet) + " ($" + str(bcISplit) + ")" + "\n\nTotal: $" + str(bcTotal) + " ($" + str(bcTSplit) + ")\n"
+    result = "Electric Bill: ${0} (${1})\nGas Bill: ${2} (${3})\nUtility Bill: ${4} (${5})\nInternet Bill: ${6} (${7})\n\nTotal: ${8} (${9})\n".format(bcElectric, bcESplit, bcGas, bcGSplit, bcUtility, bcUSplit, bcInternet, bcISplit, bcTotal, bcTSplit)
     loady("math",7)
     print(result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
@@ -315,7 +320,8 @@ def mlgCalc():
     mMPG = (float(input("Miles per Gallon?\nmpg: ")))
     mPPG = (float(input("Cost per Gallon?\n$: ")))
     final = (mMileage / mMPG) * mPPG
-    result = "Miles to Destination: " + str(mMileage) + "\n" + "Miles per Gallon: " + str(mMPG) + "\n" + "Cost per Gallon: $" + str(mPPG) + "\n\n" + "Cost per Trip: $" + str(final) + "\n"
+    #result = "Miles to Destination: " + str(mMileage) + "\n" + "Miles per Gallon: " + str(mMPG) + "\n" + "Cost per Gallon: $" + str(mPPG) + "\n\n" + "Cost per Trip: $" + str(final) + "\n"
+    result = "Miles to Destination: {0}\nMiles per Gallon: {1}\nCost per Gallon: ${2}\n\nCost per Trip: ${3}\n".format(mMileage, mMPG, mPPG, final)
     loady("math", 7)
     print(result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
