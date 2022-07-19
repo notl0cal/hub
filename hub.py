@@ -57,7 +57,8 @@ def isFloat(num):
         float(num)
         return True
     except:
-        a = input("Wrong Input! Do you want to try again? (Y/N) ")
+        clear()
+        a = input("Invalid Input! Would you like to try again? (Y/N)\n: ")
         if a in y:
             eMath()
         else:
@@ -180,9 +181,9 @@ def eMath():
             clear()
             while True:
                 print("""How would you like to setup your trade?\n
-                1.) 3:6
-                2.) 6:12
-                3.) Custom
+        1.) 3:6
+        2.) 6:12
+        3.) Custom
                 """)
                 emTradeParams = input("Please select an option\n: ")
                 clear()
