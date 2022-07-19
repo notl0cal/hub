@@ -172,15 +172,15 @@ def eMath():
                 2.) 6:12
                 3.) Custom
                 """)
-                emTradeParams = int(input("Please select an option\n: "))
+                emTradeParams = input("Please select an option\n: ")
                 clear()
-                if emTradeParams == 1:
+                if emTradeParams == "1":
                     emTake = (emAvg * 0.06) + emAvg
                     emStop = emAvg - (emAvg * 0.03)
-                elif emTradeParams == 2:
+                elif emTradeParams == "2":
                     emTake = (emAvg * 0.12) + emAvg
                     emStop = emAvg - (emAvg * 0.06)
-                elif emTradeParams == 3:
+                elif emTradeParams == "3":
                     emTake = float(input("Where will you sell?\n$: "))
                     emStopIN = str(input("Do you want to set a stop loss?(Y/N)\n: "))
                     if emStopIN in y:
@@ -191,7 +191,7 @@ def eMath():
                         clear()
                         continue
                 else:
-                    print("Not a valid option...")
+                    input("Not a valid option! Press enter to continue...")
                     loady("reset", 15)
                     eMath()
                 emPosition = emAvg * emTotalVolume
@@ -215,6 +215,7 @@ def eMath():
                         file.write(date + " | " + func  + "\n" + result)
                     loady("log", 12)
                     loady("reset", 15)
+                    intro()
                 else:
                     loady("reset", 15)
                     intro()
@@ -423,4 +424,3 @@ def main():
 #dunder check
 if __name__ == "__main__":
     main()
-    #test line
