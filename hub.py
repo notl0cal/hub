@@ -3,6 +3,8 @@
 import sys
 import os
 import math
+from tempfile import TemporaryFile
+from this import d
 import time
 from sys import platform
 from datetime import datetime
@@ -50,6 +52,16 @@ def loady(msg:int, times:int):
             sys.stdout.write("\r" + "Loading...  " + animation[i % len(animation)])
             sys.stdout.flush()
     clear()
+def isFloat(num):
+    try:
+        float(num)
+        return True
+    except:
+        a = input("Wrong Input! Do you want to try again? (Y/N) ")
+        if a in y:
+            eMath()
+        else:
+            intro()
 #main function
 def intro():
     loady("load", 15)
@@ -156,9 +168,9 @@ def eMath():
     loady("moduleLoad", 10)
     func = "Entry Maths"
     emTicker = str(input("Please enter the ticker:\n: "))
-    if emTicker.isalpha():
-        emValues = [float(x) for x in input("Please enter the entry point. *add spaces for average / correspond volume(x) with share price($).*\n$: ").split()]
-        emVolumes = [float(x) for x in input("x: ").split()]
+    if emTicker.isalpha() and len(emTicker) == 3:
+        emValues = [float(x) for x in input("Please enter the entry point. *add spaces for average / correspond volume(x) with share price($).*\n$: ").split() if isFloat(x)]
+        emVolumes = [float(x) for x in input("x: ").split() if isFloat(x)]
         while len(emValues) == len(emVolumes):
             emTotalVolume = sum(emVolumes)
             dcaTotal = 0
@@ -199,7 +211,7 @@ def eMath():
                 emFutPlus = emProfit + emPosition
                 if emStop == "NA":
                     emLoss = "NA"
-                elif "%" in emStop:
+                if "%" in str(emStop):
                     emStop =  emAvg - ((float(emStop.replace("%", "")) / 100) * emAvg)
                 emLoss = ((emAvg - emStop) * emTotalVolume)
                 emFutMinus = emPosition - emLoss
