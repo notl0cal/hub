@@ -78,8 +78,6 @@ def isFloat(num):
             billCalculator()
         if a.lower() in y and module == 8:
             mlgCalc()
-        else:
-            intro()
 #main function
 def intro():
     loady("load", 15)
@@ -144,10 +142,10 @@ def pChange():
     pcFinal = float(input("Enter the final price\n: "))
     pcChange = (pcCurrent - pcFinal) / pcCurrent
     pcFormat = "%.0f%%" % (-100 * pcChange)
-    result = "Current Price: ${0}\nFinal Price: ${1}\nPercent Change: {2}\n".format(str(pcCurrent), str(pcFinal), str(pcFormat))
+    result = "\tCurrent Price: ${0}\n\tFinal Price: ${1}\n\tPercent Change: {2}\n".format(str(pcCurrent), str(pcFinal), str(pcFormat))
     clear()
     loady("math", 20)
-    print(result)
+    print(func + ":\n" + result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")
     if logInput.lower() in y:
         with open("trade.log", "a+") as file:
@@ -171,9 +169,9 @@ def dca():
                 dcaSharePrices = str(dcaSharePrices).replace(j, "")
                 dcaVolumes = str(dcaVolumes).replace(j, "")
         dcaAvg = dcaTotal / dcaTotalVolume
-        result = "Values: ${0}\nVolumes: x{1}\nAverage: {2}".format(dcaSharePrices, dcaVolumes, str(dcaAvg))
+        result = "\tValue(s): ${0}\n\tVolume(s): x{1}\n\tAverage: {2}\n".format(dcaSharePrices, dcaVolumes, str(dcaAvg))
         loady("math", 20)
-        print(result)
+        print(func + ":\n" + result)
         logInput = input("Do you want to log this output? (Y/N)\n: ")
         if logInput.lower() in y:
             with open("trade.log", "a+") as file:
@@ -253,7 +251,7 @@ def eMath():
                     emVolumes = str(emVolumes).replace(j, "")
                 result = "Ticker: {0}\n\n\tValue(s): ${1}\n\tVolume(s): x{2}\n\n\tAverage: ${3}\n\tTotal Volume: x{4}\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
                 loady("math", 20)
-                print(result)
+                print(func + ":\n" + result)
                 logInput = input("Do you want to log this output? (Y/N)\n: ")
                 if logInput.lower() in y:
                     with open("trade.log", "a+") as file:
@@ -287,8 +285,8 @@ def iMath():
     imResult = (imRate / 100) * imVolume
     imTotal = (imVolume + imResult)
    # result = "Interest Rate: " + str(imRate) + "%\n" + "Borrowed Amount: $" + str(imVolume) + "\n" +"Interest Expense: $" + str(imResult) + "\n"
-    result = "Interest Rate: {0}%\nBorrowed Amount: ${1}\nInterest Expense: ${2}\n\nTotal Due: ${3}".format(str(imRate), str(imVolume), str(imResult), str(imTotal))
-    print(result)
+    result = "\tInterest Rate: {0}%\n\tBorrowed Amount: ${1}\n\tInterest Expense: ${2}\n\n\tTotal Due: ${3}\n".format(str(imRate), str(imVolume), str(imResult), str(imTotal))
+    print(func + ":\n" + result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
     if logInput.lower() in y:
         with open("trade.log", "a+") as file:
@@ -301,7 +299,7 @@ def iMath():
 def taxCalculator():
     loady("moduleLoad",10)
     func = "Tax Calculator"
-    tcVolume = int(input("How much did you spend?\n$ "))
+    tcVolume = int(input("How much did you spend?\n: $"))
     clear()
     print("""Which Taxes?
     1.) Sales
@@ -311,15 +309,17 @@ def taxCalculator():
     if tcParam == "1":
         func = "Sales Tax Calculator"
         tcResult = tcVolume + (tcVolume * 0.0825)
-        result = "Result: " + str(tcResult)
-        result = "Result: {0}\n".format(tcResult)
+        tcTax = tcResult - tcVolume
+        #result = "Result: " + str(tcResult)
+        result = "\tTaxes Due: ${0}\n\tResult: ${1}\n".format(tcTax, tcResult)
     elif tcParam == "2":
         func = "MJ Tax Calculator"
         tcResult = tcVolume + (tcVolume * 0.1625)
+        tcTax = tcResult - tcVolume
         #result = "Result: " + str(tcResult) +"\n"
-        result = "Result: {0}\n".format(tcResult)
+        result = "\tTaxes Due: ${0}\n\tResult: ${1}\n".format(tcTax, tcResult)
     loady("math",7)
-    print(result)
+    print(func + ":\n" + result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
     if logInput.lower() in y:
         with open("trade.log", "a+") as file:
@@ -333,10 +333,10 @@ def billCalculator():
     loady("moduleLoad", 10)
     func = "Bills"
     bcList = []
-    bcElectric = float(input("Electric Bill\n$ "))
-    bcGas = float(input("Gas Bill\n$ "))
-    bcUtility = float(input("Utility Bill\n$ "))
-    bcInternet = float(input("Internet Bill\n$ "))
+    bcElectric = float(input("Electric Bill\n:$"))
+    bcGas = float(input("Gas Bill\n:$"))
+    bcUtility = float(input("Utility Bill\n:$"))
+    bcInternet = float(input("Internet Bill\n:$"))
     bcList.append(bcElectric + bcGas + bcUtility + bcInternet)
     bcTotal = sum(bcList)
     bcSplit = int(input("How are you splitting the bills?\n: "))
@@ -346,9 +346,9 @@ def billCalculator():
     bcUSplit = bcUtility / bcSplit
     bcISplit = bcInternet / bcSplit
     #result = "Electric Bill: $" + str(bcElectric) + " ($" + str(bcESplit) + ")" + "\nGas Bill: $" + str(bcGas) + " ($" + str(bcGSplit) + ")" + "\nUtility Bill: $" + str(bcUtility) + " ($" + str(bcUSplit) + ")" + "\nInternet Bill: $" + str(bcInternet) + " ($" + str(bcISplit) + ")" + "\n\nTotal: $" + str(bcTotal) + " ($" + str(bcTSplit) + ")\n"
-    result = "Electric Bill: ${0} (${1})\nGas Bill: ${2} (${3})\nUtility Bill: ${4} (${5})\nInternet Bill: ${6} (${7})\n\nTotal: ${8} (${9})\n".format(bcElectric, bcESplit, bcGas, bcGSplit, bcUtility, bcUSplit, bcInternet, bcISplit, bcTotal, bcTSplit)
+    result = "\tElectric Bill: ${0} (${1})\n\tGas Bill: ${2} (${3})\n\tUtility Bill: ${4} (${5})\n\tInternet Bill: ${6} (${7})\n\n\tTotal: ${8} (${9})\n".format(bcElectric, bcESplit, bcGas, bcGSplit, bcUtility, bcUSplit, bcInternet, bcISplit, bcTotal, bcTSplit)
     loady("math",7)
-    print(result)
+    print(func + ":\n" + result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
     if logInput.lower() in y:
         with open("bills.log", "a+") as file:
@@ -367,9 +367,9 @@ def mlgCalc():
     mPPG = (float(input("Cost per Gallon?\n$: ")))
     final = (mMileage / mMPG) * mPPG
     #result = "Miles to Destination: " + str(mMileage) + "\n" + "Miles per Gallon: " + str(mMPG) + "\n" + "Cost per Gallon: $" + str(mPPG) + "\n\n" + "Cost per Trip: $" + str(final) + "\n"
-    result = "Miles to Destination: {0}\nMiles per Gallon: {1}\nCost per Gallon: ${2}\n\nCost per Trip: ${3}\n".format(mMileage, mMPG, mPPG, final)
+    result = "\tMiles to Destination: {0}\n\tMiles per Gallon: {1}\n\tCost per Gallon: ${2}\n\n\tCost per Trip: ${3}\n".format(mMileage, mMPG, mPPG, final)
     loady("math", 7)
-    print(result)
+    print(func + ":\n" + result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
     if logInput.lower() in y:
         with open("mileage.log", "a+") as file:
