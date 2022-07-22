@@ -3,8 +3,6 @@
 import sys
 import os
 import math
-from tempfile import TemporaryFile
-from this import d
 import time
 from sys import platform
 from datetime import datetime
