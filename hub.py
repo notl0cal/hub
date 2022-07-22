@@ -10,6 +10,8 @@ from datetime import datetime
 y = ["Y", "y", "YES", "yes", "Yes", "1"]
 n = ["N", "n", "NO", "no", "No", "0"]
 percent = "%"
+global module
+module = 0
 today = datetime.today()
 date = today.strftime("\n%d/%m/%Y @ %H:%M:%S")
 #global functions
@@ -50,6 +52,9 @@ def loady(msg:int, times:int):
             sys.stdout.write("\r" + "Loading...  " + animation[i % len(animation)])
             sys.stdout.flush()
     clear()
+def modSwitch(mod):
+    global module
+    module = mod
 def isFloat(num):
     try:
         float(num)
@@ -57,8 +62,22 @@ def isFloat(num):
     except:
         clear()
         a = input("Invalid Input! Would you like to try again? (Y/N)\n: ")
-        if a in y:
+        if a.lower() in y and module == 1:
+            pChange()
+        if a.lower() in y and module == 2:
+            dca()
+        if a.lower() in y and module == 3:
             eMath()
+        #if a.lower() in y and module == 4:
+            #iMath()
+        if a.lower() in y and module == 5:
+            iMath()
+        if a.lower() in y and module == 6:
+            taxCalculator()
+        if a.lower() in y and module == 7:
+            billCalculator()
+        if a.lower() in y and module == 8:
+            mlgCalc()
         else:
             intro()
 #main function
@@ -75,27 +94,35 @@ X.) Log Settings.
         """)
         introSelection = input("Please select an option\n: ")
         if introSelection == "1":
+            modSwitch(1)
             pChange()
             continue
         if introSelection == "2":
+            modSwitch(2)
             dca()
             continue
         if introSelection == "3":
+            modSwitch(3)
             eMath()
             continue
 #       if introSelection == "4":
+#           modSwitch(4)
 #           placeholder()
 #           continue
         if introSelection == "5":
+            modSwitch(5)
             iMath()
             continue
         if introSelection == "6":
+            modSwitch(6)
             taxCalculator()
             continue
         if introSelection == "7":
+            modSwitch(7)
             billCalculator()
             continue
         if introSelection == "8":
+            modSwitch(8)
             mlgCalc()
             continue
         if introSelection.lower() == "x":
@@ -133,8 +160,8 @@ def pChange():
 def dca():
     loady("moduleLoad", 10)
     func = "Dollar Cost Average"
-    dcaSharePrices = [float(x) for x in input("Please enter dollar amounts with spaces inbetween. *correspond volume(x) with share price($).*\n$: ").split()]
-    dcaVolumes = [float(x) for x in input("x: ").split()]
+    dcaSharePrices = [float(x) for x in input("Please enter dollar amounts with spaces inbetween. *correspond volume(x) with share price($).*\n$: ").split() if isFloat(x)]
+    dcaVolumes = [float(x) for x in input("x: ").split() if isFloat(x)]
     if len(dcaSharePrices) == len(dcaVolumes):
         dcaTotalVolume = sum(dcaVolumes)
         dcaTotal = 0
@@ -153,6 +180,13 @@ def dca():
                 file.write(date + " | " + func + "\n" + result)
             loady("log", 12)
             loady("reset", 15)
+        else:
+            loady("reset", 15)
+            intro()
+    else:
+        a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
+        if a in y:
+            eMath()
         else:
             loady("reset", 15)
             intro()
@@ -217,7 +251,7 @@ def eMath():
                 for j in ["[", "]"]:
                     emValues = str(emValues).replace(j, "")
                     emVolumes = str(emVolumes).replace(j, "")
-                result = "Ticker: {0}\n\n\tValues: ${1}\n\tVolumes: x{2}\n\n\tAverage: ${3}\n\tTotal Volume: x{4}\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
+                result = "Ticker: {0}\n\n\tValue(s): ${1}\n\tVolume(s): x{2}\n\n\tAverage: ${3}\n\tTotal Volume: x{4}\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
                 loady("math", 20)
                 print(result)
                 logInput = input("Do you want to log this output? (Y/N)\n: ")
