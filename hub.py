@@ -10,6 +10,10 @@ from datetime import datetime
 y = ["Y", "y", "YES", "yes", "Yes", "1"]
 n = ["N", "n", "NO", "no", "No", "0"]
 percent = "%"
+global func 
+func = ""
+global result
+result = ""
 global module
 module = 0
 today = datetime.today()
@@ -56,6 +60,16 @@ def loady(msg:int, times:int):
             time.sleep(0.1)
             sys.stdout.write("\r" + "Exiting... " + animation[i % len(animation)])
     clear()
+def oSave(file):
+    logInput = input("Do you want to log this output? (Y/N)\n: ")
+    if logInput.lower() in y:
+        with open(file, "a+") as open_file:
+            open_file.write(date + " | " + func + "\n" + result)
+        loady("log", 12)
+        loady("reset", 15)
+    else:
+        loady("reset", 15)
+        intro()
 def modSwitch(mod):
     global module
     module = mod
@@ -143,26 +157,21 @@ X.) Log Settings.
 #referenced functions
 def pChange():
     loady("moduleLoad", 10)
+    global func
     func = "Percent Change Calculator"
     pcCurrent = float(input("Enter the current price\n: "))
     pcFinal = float(input("Enter the final price\n: "))
     pcChange = (pcCurrent - pcFinal) / pcCurrent
     pcFormat = "%.0f%%" % (-100 * pcChange)
+    global result
     result = "\tCurrent Price: ${0}\n\tFinal Price: ${1}\n\tPercent Change: {2}\n".format(str(pcCurrent), str(pcFinal), str(pcFormat))
     clear()
     loady("math", 20)
     print(func + ":\n" + result)
-    logInput = input("Do you want to log this output? (Y/N)\n: ")
-    if logInput.lower() in y:
-        with open("trade.log", "a+") as file:
-            file.write(date + " | " + func + "\n" + result)
-        loady("log", 12)
-        loady("reset", 15)
-    else:
-        loady("reset", 15)
-        intro()
+    oSave("trade.log")
 def dca():
     loady("moduleLoad", 10)
+    global func
     func = "Dollar Cost Average"
     dcaSharePrices = [float(x) for x in input("Please enter dollar amounts with spaces inbetween.\n*correspond volume(x) with share price($).*\n$: ").split() if isFloat(x)]
     dcaVolumes = [float(x) for x in input("x: ").split() if isFloat(x)]
@@ -175,26 +184,12 @@ def dca():
                 dcaSharePrices = str(dcaSharePrices).replace(j, "")
                 dcaVolumes = str(dcaVolumes).replace(j, "")
         dcaAvg = dcaTotal / dcaTotalVolume
+        global result
         result = "\tValue(s): ${0}\n\tVolume(s): {1}x\n\tAverage: {2}\n".format(dcaSharePrices, dcaVolumes, str(dcaAvg))
         loady("math", 20)
         print(func + ":\n" + result)
-        logInput = input("Do you want to log this output? (Y/N)\n: ")
-        if logInput.lower() in y:
-            with open("trade.log", "a+") as file:
-                file.write(date + " | " + func + "\n" + result)
-            loady("log", 12)
-            loady("reset", 15)
-        else:
-            loady("reset", 15)
-            intro()
+        oSave("trade.log")
     else:
-        a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
-        if a in y:
-            eMath()
-        else:
-            loady("reset", 15)
-            intro()
-    if len(dcaSharePrices) != len(dcaVolumes):
         a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
         if a in y:
             dca()
@@ -203,6 +198,7 @@ def dca():
             intro()
 def eMath():
     loady("moduleLoad", 10)
+    global func
     func = "Entry Maths"
     emTicker = str(input("Please enter the ticker:\n: "))
     if emTicker.isalpha() and len(emTicker) == 3:
@@ -255,20 +251,11 @@ def eMath():
                 for j in ["[", "]"]:
                     emValues = str(emValues).replace(j, "")
                     emVolumes = str(emVolumes).replace(j, "")
+                global result
                 result = "Ticker: {0}\n\n\tValue(s): ${1}\n\tVolume(s): {2}x\n\n\tAverage: ${3}\n\tTotal Volume: {4}x\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
                 loady("math", 20)
                 print(func + ":\n" + result)
-                logInput = input("Do you want to log this output? (Y/N)\n: ")
-                if logInput.lower() in y:
-                    with open("trade.log", "a+") as file:
-                        file.write(date + " | " + func  + "\n" + result)
-                    loady("log", 12)
-                    loady("reset", 15)
-                    intro()
-                else:
-                    loady("reset", 15)
-                    intro()
-        else:
+                oSave("trade.log")
             a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
             if a in y:
                 eMath()
@@ -284,6 +271,7 @@ def eMath():
             intro()
 def iMath():
     loady("moduleLoad", 10)
+    global func
     func = "Interest Calculator"
     imRate = float(input("Please enter the interest rate:\n%: "))
     imVolume = float(input("Please enter borrowed amount:\n$: "))
@@ -291,19 +279,13 @@ def iMath():
     imResult = (imRate / 100) * imVolume
     imTotal = (imVolume + imResult)
    # result = "Interest Rate: " + str(imRate) + "%\n" + "Borrowed Amount: $" + str(imVolume) + "\n" +"Interest Expense: $" + str(imResult) + "\n"
+    global result
     result = "\tInterest Rate: {0}%\n\tBorrowed Amount: ${1}\n\tInterest Expense: ${2}\n\n\tTotal Due: ${3}\n".format(str(imRate), str(imVolume), str(imResult), str(imTotal))
     print(func + ":\n" + result)
-    logInput = input("Do you want to log this output? (Y/N)\n: ")        
-    if logInput.lower() in y:
-        with open("trade.log", "a+") as file:
-            file.write(date + " | " + func + "\n" + result)
-        loady("log", 12)
-        loady("reset", 15)
-    else:
-        loady("reset", 15)
-        intro()
+    oSave("trade.log")
 def taxCalculator():
     loady("moduleLoad",10)
+    global func
     func = "Tax Calculator"
     tcRate = 0.0825
     tcVolume = int(input("How much did you spend?\n: $"))
@@ -330,17 +312,10 @@ def taxCalculator():
         result = "\tTax Rate: {2}%\n\tGross Spend: ${3}\n\tTaxes Due: ${0}\n\n\tResult: ${1}\n".format(tcTax, tcResult, tcRate, tcVolume)
     loady("math",7)
     print(func + ":\n" + result)
-    logInput = input("Do you want to log this output? (Y/N)\n: ")        
-    if logInput.lower() in y:
-        with open("trade.log", "a+") as file:
-            file.write(date + " | " + func + "\n" + result)
-        loady("log", 12)
-        loady("reset", 15)
-    else:
-        loady("reset", 15)
-        intro()
+    oSave("trade.log")
 def billCalculator():
     loady("moduleLoad", 10)
+    global func
     func = "Bills"
     bcList = []
     bcElectric = float(input("Electric Bill\n:$"))
@@ -356,20 +331,14 @@ def billCalculator():
     bcUSplit = bcUtility / bcSplit
     bcISplit = bcInternet / bcSplit
     #result = "Electric Bill: $" + str(bcElectric) + " ($" + str(bcESplit) + ")" + "\nGas Bill: $" + str(bcGas) + " ($" + str(bcGSplit) + ")" + "\nUtility Bill: $" + str(bcUtility) + " ($" + str(bcUSplit) + ")" + "\nInternet Bill: $" + str(bcInternet) + " ($" + str(bcISplit) + ")" + "\n\nTotal: $" + str(bcTotal) + " ($" + str(bcTSplit) + ")\n"
+    global result
     result = "\tElectric Bill: ${0} (${1})\n\tGas Bill: ${2} (${3})\n\tUtility Bill: ${4} (${5})\n\tInternet Bill: ${6} (${7})\n\n\tTotal: ${8} (${9})\n".format(bcElectric, bcESplit, bcGas, bcGSplit, bcUtility, bcUSplit, bcInternet, bcISplit, bcTotal, bcTSplit)
     loady("math",7)
     print(func + ":\n" + result)
-    logInput = input("Do you want to log this output? (Y/N)\n: ")        
-    if logInput.lower() in y:
-        with open("bills.log", "a+") as file:
-            file.write(date + " | " + func + "\n" + result)
-        loady("log", 12)
-        loady("reset", 15)
-    else:
-        loady("reset", 15)
-        intro()
+    oSave("bills.log")
 def mlgCalc():
     clear()
+    global func
     func = "Mileage Calculator"
     loady("moduleLoad", 10)
     mMileage = (float(input("Miles to Destination?\n: ")))
@@ -383,18 +352,11 @@ def mlgCalc():
     mWeekly = mFinal * 5
     mMonthly = mFinal * 20
     #result = "Miles to Destination: " + str(mMileage) + "\n" + "Miles per Gallon: " + str(mMPG) + "\n" + "Cost per Gallon: $" + str(mPPG) + "\n\n" + "Cost per Trip: $" + str(final) + "\n"
+    global result
     result = "\tMiles to Destination: {0}/mi\n\tMiles per Gallon: {1}/gal\n\tCost per Gallon: ${2}\n\tGallons per Trip: {3}/gal\n\n\tCost per Trip: ${3}\n\tCost per Week: ${4}\n\tCost per Month: ${5}\n".format(mMileage, mMPG, mPPG, mGallonsToDest, mFinal, mWeekly, mMonthly)
     loady("math", 7)
     print(func + ":\n" + result)
-    logInput = input("Do you want to log this output? (Y/N)\n: ")        
-    if logInput.lower() in y:
-        with open("mileage.log", "a+") as file:
-            file.write(date + " | " + func + "\n" + result)
-        loady("log", 12)
-        loady("reset", 15)
-    else:
-        loady("reset", 15)
-        intro()
+    oSave("mileage.log")
 def logTools():
     loady("moduleLoad",10)
     while True:
