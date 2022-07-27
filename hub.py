@@ -51,6 +51,10 @@ def loady(msg:int, times:int):
             time.sleep(0.1)
             sys.stdout.write("\r" + "Loading...  " + animation[i % len(animation)])
             sys.stdout.flush()
+    if str(msg) == "exit":
+        for i in range(times):
+            time.sleep(0.1)
+            sys.stdout.write("\r" + "Exiting... " + animation[i % len(animation)])
     clear()
 def modSwitch(mod):
     global module
@@ -126,6 +130,7 @@ X.) Log Settings.
         if introSelection.lower() == "x":
             logTools()
         if introSelection == "0":
+            loady("exit", 10)
             exit()
         else:
             clear()
@@ -133,6 +138,7 @@ X.) Log Settings.
             if invalidInput.lower() in y:
                 intro()
             else:
+                loady("exit", 10)
                 exit()
 #referenced functions
 def pChange():
@@ -158,7 +164,7 @@ def pChange():
 def dca():
     loady("moduleLoad", 10)
     func = "Dollar Cost Average"
-    dcaSharePrices = [float(x) for x in input("Please enter dollar amounts with spaces inbetween. *correspond volume(x) with share price($).*\n$: ").split() if isFloat(x)]
+    dcaSharePrices = [float(x) for x in input("Please enter dollar amounts with spaces inbetween.\n*correspond volume(x) with share price($).*\n$: ").split() if isFloat(x)]
     dcaVolumes = [float(x) for x in input("x: ").split() if isFloat(x)]
     if len(dcaSharePrices) == len(dcaVolumes):
         dcaTotalVolume = sum(dcaVolumes)
@@ -169,7 +175,7 @@ def dca():
                 dcaSharePrices = str(dcaSharePrices).replace(j, "")
                 dcaVolumes = str(dcaVolumes).replace(j, "")
         dcaAvg = dcaTotal / dcaTotalVolume
-        result = "\tValue(s): ${0}\n\tVolume(s): x{1}\n\tAverage: {2}\n".format(dcaSharePrices, dcaVolumes, str(dcaAvg))
+        result = "\tValue(s): ${0}\n\tVolume(s): {1}x\n\tAverage: {2}\n".format(dcaSharePrices, dcaVolumes, str(dcaAvg))
         loady("math", 20)
         print(func + ":\n" + result)
         logInput = input("Do you want to log this output? (Y/N)\n: ")
@@ -200,7 +206,7 @@ def eMath():
     func = "Entry Maths"
     emTicker = str(input("Please enter the ticker:\n: "))
     if emTicker.isalpha() and len(emTicker) == 3:
-        emValues = [float(x) for x in input("Please enter the entry point. *add spaces for average / correspond volume(x) with share price($).*\n$: ").split() if isFloat(x)]
+        emValues = [float(x) for x in input("Please enter the entry point.\n*add spaces for average / correspond volume(x) with share price($).*\n$: ").split() if isFloat(x)]
         emVolumes = [float(x) for x in input("x: ").split() if isFloat(x)]
         while len(emValues) == len(emVolumes):
             emTotalVolume = sum(emVolumes)
@@ -249,7 +255,7 @@ def eMath():
                 for j in ["[", "]"]:
                     emValues = str(emValues).replace(j, "")
                     emVolumes = str(emVolumes).replace(j, "")
-                result = "Ticker: {0}\n\n\tValue(s): ${1}\n\tVolume(s): x{2}\n\n\tAverage: ${3}\n\tTotal Volume: x{4}\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
+                result = "Ticker: {0}\n\n\tValue(s): ${1}\n\tVolume(s): {2}x\n\n\tAverage: ${3}\n\tTotal Volume: {4}x\n\tPosition: ${5}\n\tFuture Position: (+)${6} | (-)${7}\n\n\tTake: ${8}\n\tStop: ${9}\n\n\tProfit: ${10}\n\tLoss: ${11}\n".format(emTicker.upper(), emValues, emVolumes, emAvg, emTotalVolume, emPosition, emFutPlus, emFutMinus, emTake, emStop, emProfit, emLoss)
                 loady("math", 20)
                 print(func + ":\n" + result)
                 logInput = input("Do you want to log this output? (Y/N)\n: ")
@@ -299,6 +305,7 @@ def iMath():
 def taxCalculator():
     loady("moduleLoad",10)
     func = "Tax Calculator"
+    tcRate = 0.0825
     tcVolume = int(input("How much did you spend?\n: $"))
     clear()
     print("""Which Taxes?
@@ -308,16 +315,19 @@ def taxCalculator():
     tcParam = input("Please select an option.\n: ")
     if tcParam == "1":
         func = "Sales Tax Calculator"
-        tcResult = tcVolume + (tcVolume * 0.0825)
+        tcResult = tcVolume + (tcVolume * tcRate)
         tcTax = tcResult - tcVolume
+        tcRate = tcRate * 100
         #result = "Result: " + str(tcResult)
-        result = "\tTaxes Due: ${0}\n\tResult: ${1}\n".format(tcTax, tcResult)
+        result = "\tTax Rate: {2}%\n\tGross Spend: ${3}\n\tTaxes Due: ${0}\n\n\tResult: ${1}\n".format(tcTax, tcResult, tcRate, tcVolume)
     elif tcParam == "2":
         func = "MJ Tax Calculator"
-        tcResult = tcVolume + (tcVolume * 0.1625)
+        tcRate = 0.1625
+        tcResult = tcVolume + (tcVolume * tcRate)
         tcTax = tcResult - tcVolume
+        tcRate = tcRate * 100
         #result = "Result: " + str(tcResult) +"\n"
-        result = "\tTaxes Due: ${0}\n\tResult: ${1}\n".format(tcTax, tcResult)
+        result = "\tTax Rate: {2}%\n\tGross Spend: ${3}\n\tTaxes Due: ${0}\n\n\tResult: ${1}\n".format(tcTax, tcResult, tcRate, tcVolume)
     loady("math",7)
     print(func + ":\n" + result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
@@ -365,9 +375,15 @@ def mlgCalc():
     mMileage = (float(input("Miles to Destination?\n: ")))
     mMPG = (float(input("Miles per Gallon?\nmpg: ")))
     mPPG = (float(input("Cost per Gallon?\n$: ")))
-    final = (mMileage / mMPG) * mPPG
+    mRTrip = input("Is this a round trip? (Y/N)\n: ")
+    if mRTrip in y:
+        mMileage = mMileage * 2
+    mGallonsToDest = mMileage / mMPG
+    mFinal = (mMileage / mMPG) * mPPG
+    mWeekly = mFinal * 5
+    mMonthly = mFinal * 20
     #result = "Miles to Destination: " + str(mMileage) + "\n" + "Miles per Gallon: " + str(mMPG) + "\n" + "Cost per Gallon: $" + str(mPPG) + "\n\n" + "Cost per Trip: $" + str(final) + "\n"
-    result = "\tMiles to Destination: {0}\n\tMiles per Gallon: {1}\n\tCost per Gallon: ${2}\n\n\tCost per Trip: ${3}\n".format(mMileage, mMPG, mPPG, final)
+    result = "\tMiles to Destination: {0}/mi\n\tMiles per Gallon: {1}/gal\n\tCost per Gallon: ${2}\n\tGallons per Trip: {3}/gal\n\n\tCost per Trip: ${3}\n\tCost per Week: ${4}\n\tCost per Month: ${5}\n".format(mMileage, mMPG, mPPG, mGallonsToDest, mFinal, mWeekly, mMonthly)
     loady("math", 7)
     print(func + ":\n" + result)
     logInput = input("Do you want to log this output? (Y/N)\n: ")        
