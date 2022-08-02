@@ -1,0 +1,15 @@
+1.) clean up logTools()
+2.) Fix global declaration problem in taxCalculator() @ line 313
+3.) Fix module names to accurately represent camelCase and naming scheme for file.
+4.) Figure a clever way to split the bills in billCalculator()
+
+
+
+
+X.) Better readability for all of hub
+
+
+
+
+
+HUB 1.0 IDEAS ??
