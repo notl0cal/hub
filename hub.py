@@ -256,12 +256,12 @@ def eMath():
                 loady("math", 20)
                 print(func + ":\n" + result)
                 oSave("trade.log")
-            a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
-            if a in y:
-                eMath()
-            else:
-                loady("reset", 15)
-                intro()
+        a = input("Not in correspondence! Do you want to try again? (Y/N)\n: ")
+        if a in y:
+             eMath()
+        else:
+            loady("reset", 15)
+            intro()
     else:
         a = input("Invalid Input. Do you want to try again? (Y/N)\n: ")
         if a in y:
