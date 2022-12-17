@@ -6,7 +6,7 @@ import math
 import time
 from sys import platform
 from datetime import datetime
-#global variable declarations
+#global variable declarations ssssss
 y = ["Y", "y", "YES", "yes", "Yes", "1"]
 n = ["N", "n", "NO", "no", "No", "0"]
 percent = "%"
