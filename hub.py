@@ -325,14 +325,9 @@ def billCalculator():
     bcList.append(bcElectric + bcGas + bcUtility + bcInternet)
     bcTotal = sum(bcList)
     bcSplit = int(input("How are you splitting the bills?\n: "))
-    bcTSplit = bcTotal / bcSplit
-    bcESplit = bcElectric / bcSplit
-    bcGSplit = bcGas / bcSplit
-    bcUSplit = bcUtility / bcSplit
-    bcISplit = bcInternet / bcSplit
     #result = "Electric Bill: $" + str(bcElectric) + " ($" + str(bcESplit) + ")" + "\nGas Bill: $" + str(bcGas) + " ($" + str(bcGSplit) + ")" + "\nUtility Bill: $" + str(bcUtility) + " ($" + str(bcUSplit) + ")" + "\nInternet Bill: $" + str(bcInternet) + " ($" + str(bcISplit) + ")" + "\n\nTotal: $" + str(bcTotal) + " ($" + str(bcTSplit) + ")\n"
     global result
-    result = "\tElectric Bill: ${0} (${1})\n\tGas Bill: ${2} (${3})\n\tUtility Bill: ${4} (${5})\n\tInternet Bill: ${6} (${7})\n\n\tTotal: ${8} (${9})\n".format(bcElectric, bcESplit, bcGas, bcGSplit, bcUtility, bcUSplit, bcInternet, bcISplit, bcTotal, bcTSplit)
+    result = "\tElectric Bill: ${0} (${1})\n\tGas Bill: ${2} (${3})\n\tUtility Bill: ${4} (${5})\n\tInternet Bill: ${6} (${7})\n\n\tTotal: ${8} (${9})\n".format(bcElectric, bcElectric / bcSplit, bcGas, bcGas / bcSplit, bcUtility, bcUtility / bcSplit, bcInternet, bcInternet / bcSplit, bcTotal, bcTotal / bcSplit)
     loady("math",7)
     print(func + ":\n" + result)
     oSave("bills.log")
